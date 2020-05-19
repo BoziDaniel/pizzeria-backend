@@ -6,10 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,10 +21,11 @@ public class PizzaController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PizzaController.class);
 
-    @GetMapping
-    public List<Pizza> getPaginatedPizzas() {
-        LOGGER.info("get mapping: /pizzas rest end point");
-        List<Pizza> pizzas =  pizzaRepository.getPaginatedPizzas(1);
+    @GetMapping("/{page}")
+    public List<Pizza> getPaginatedPizzas(@PathVariable("page") Integer page) {
+        LOGGER.info("get request: /pizzas/" + page + " arrived");
+        List<Pizza> pizzas =  pizzaRepository.getPaginatedPizzas(page);
+        LOGGER.info(" Get request for endpoint/pizzas/" + page + " processed. \n Return value will be: " + pizzas.toString());
         return pizzas;
     }
 }
