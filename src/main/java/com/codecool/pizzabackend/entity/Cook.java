@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 @Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @SuperBuilder
 @DiscriminatorValue("Cook")
 public class Cook extends User{

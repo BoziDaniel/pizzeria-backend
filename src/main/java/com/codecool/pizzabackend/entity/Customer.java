@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue("Customer")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 
 @SuperBuilder
 

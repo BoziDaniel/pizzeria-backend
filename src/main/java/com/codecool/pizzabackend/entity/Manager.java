@@ -13,7 +13,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue("Manager")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @SuperBuilder
 public class Manager extends User {
 
