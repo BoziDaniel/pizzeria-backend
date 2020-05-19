@@ -62,17 +62,23 @@ public class PizzaBackendApplication {
             incomingOrderRepository.save(incomingOrder);
             Customer customer = Customer.builder()
                     .username("customer")
+                    .customerOrder(incomingOrder)
                     .build();
             userRepository.save(customer);
             Cook cook = Cook.builder()
                     .username("cook")
+                    .assignedOrder(incomingOrder)
                     .build();
             userRepository.save(cook);
             Manager manager = Manager.builder()
                     .username("manager")
                     .build();
             userRepository.save(manager);
-
+            DeliveryGuy deliveryGuy = DeliveryGuy.builder()
+                    .username("deliveryGuy")
+                    .order(incomingOrder)
+                    .build();
+            userRepository.save(deliveryGuy);
         };
 
     }

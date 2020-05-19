@@ -16,6 +16,7 @@ public class IncomingOrder {
     @Id
     private Long id;
 
+    private OrderStatus orderStatus;
     @ElementCollection
     @CollectionTable(name = "incomingOrder_pizza_mapping",
             joinColumns = {@JoinColumn(name = "incomingOrder_id", referencedColumnName = "id")})

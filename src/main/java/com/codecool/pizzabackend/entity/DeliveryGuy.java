@@ -13,17 +13,15 @@ import javax.persistence.OneToMany;
 import java.util.Set;
 
 @Entity
-@DiscriminatorValue("Customer")
+@DiscriminatorValue("DeliveryGuy")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 @SuperBuilder
 
-public class Customer extends User {
-
-    @JoinTable(name="customer_orders")
+public class DeliveryGuy extends User{
+    @JoinTable(name="delivery_guy_orders_to_deliver")
     @OneToMany
     @Singular
-    private Set<IncomingOrder> customerOrders;
+    private Set<IncomingOrder> orders;
 }
