@@ -11,9 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
-import javax.persistence.MapKey;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 
 @SpringBootApplication
@@ -35,6 +32,15 @@ public class PizzaBackendApplication {
     public CommandLineRunner init() {
 
         return args -> {
+            for (int i = 1; i < 21; i++) {
+                String pizzaName = "pizza_" + i;
+                Pizza pizzaa = Pizza.builder()
+                        .name(pizzaName)
+                        .description("tastes reeel goooood")
+                        .build();
+                pizzaRepository.save(pizzaa);
+            }
+
             Pizza pizza = Pizza.builder()
                     .name("Testpizza")
                     .description("tastes reeel goooood")
@@ -79,6 +85,11 @@ public class PizzaBackendApplication {
                     .order(incomingOrder)
                     .build();
             userRepository.save(deliveryGuy);
+//            DeliveryGuy badDeliveryGuy = DeliveryGuy.builder()
+//                    .username("deliveryGuy")
+//                    .order(incomingOrder)
+//                    .build();
+//            userRepository.save(badDeliveryGuy);
         };
 
     }
