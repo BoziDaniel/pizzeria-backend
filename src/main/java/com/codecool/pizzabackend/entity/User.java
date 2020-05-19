@@ -1,4 +1,23 @@
 package com.codecool.pizzabackend.entity;
 
-public class User {
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import javax.persistence.*;
+
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Entity
+@DiscriminatorColumn(name = "role")
+@Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+
+public abstract class User {
+    @GeneratedValue
+    @Id
+    private Long id;
+
+    private String username;
+
 }

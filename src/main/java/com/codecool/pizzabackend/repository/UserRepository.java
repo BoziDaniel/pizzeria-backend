@@ -1,4 +1,7 @@
 package com.codecool.pizzabackend.repository;
 
-public interface UserRepository {
+import com.codecool.pizzabackend.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
 }
