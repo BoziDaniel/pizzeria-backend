@@ -30,11 +30,11 @@ public class IncomingOrderController {
 
     // it seems to be fine for now but if we cant handle the bit wierd json we have to write a converter method here
     @GetMapping("/active/{userId}")
-    public List<IncomingOrder> getActiveOrdersForUser(@PathVariable("userId") Long userId) {
+    public List<IncomingOrderDTO> getActiveOrdersForUser(@PathVariable("userId") Long userId) {
         LOGGER.info("get request: /orders/active/" + userId + " arrived");
-        List<IncomingOrder> activeOrders = incomingOrderRepository.getIncomingOrdersByOrderStatusNotLikeAndCustomer_IdIs(OrderStatus.DELIVERED, userId);
-        LOGGER.info(" Get request: /orders/active/" + userId + " processed. \n Return value will be: " + activeOrders.toString());
-        return activeOrders;
+        List<IncomingOrderDTO> activieOrderDTOs = orderService.listActiveOrdersForUser(userId);
+        LOGGER.info(" Get request: /orders/active/" + userId + " processed. \n Return value will be: " + activieOrderDTOs.toString());
+        return activieOrderDTOs;
     }
 
     @PostMapping("/{userId}")

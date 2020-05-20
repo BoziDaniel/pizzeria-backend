@@ -15,6 +15,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class IncomingOrderDTO {
     private Long id;
     private OrderStatus orderStatus;

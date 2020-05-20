@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Component
 public class OrderService {
@@ -43,6 +45,16 @@ public class OrderService {
         LOGGER.info("Incoming order created. incoming order: " + incomingOrder.toString());
         incomingOrderRepository.save(incomingOrder);
         LOGGER.info("Incoming order persisted to db. incoming order: " + incomingOrder.toString());
+    }
+
+    public List<IncomingOrderDTO> listActiveOrdersForUser(Long userId){
+        LOGGER.info("listActiveOrdersForUser started");
+        List<IncomingOrder> activeOrders = incomingOrderRepository.getIncomingOrdersByOrderStatusNotLikeAndCustomer_IdIs(OrderStatus.DELIVERED, userId);
+        List<IncomingOrderDTO> activeOrdersDTOs = new ArrayList<>();
+        for (IncomingOrder activeOrder : activeOrders) {
+            activeOrdersDTOs.add(activeOrder.generateIncomingOrderDTO());
+        }
+        return activeOrdersDTOs;
     }
 }
 
