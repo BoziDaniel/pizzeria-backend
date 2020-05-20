@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 @SpringBootApplication
 public class PizzaBackendApplication {
@@ -55,25 +56,39 @@ public class PizzaBackendApplication {
 //                    .name("Testpizza")
 //                    .description("tastes reeel goooood")
 //                    .build();
+            Customer customer = Customer.builder()
+                    .username("customer")
+                    .build();
+            userRepository.save(customer);
 
-            IncomingOrder incomingOrder = IncomingOrder.builder()
+            IncomingOrder activeOrder = IncomingOrder.builder()
                     .orderedPizzas(new HashMap<Pizza, Integer>(){{
                         put(pizza,1);
                         put(pizza2,5);
                     }})
+                    .customer(customer)
+                    .orderStatus(OrderStatus.IN_PROGRESS)
                     .build();
-
+            IncomingOrder completedOrder = IncomingOrder.builder()
+                    .orderedPizzas(new HashMap<Pizza, Integer>(){{
+                        put(pizza,2);
+                        put(pizza2,1);
+                    }})
+                    .customer(customer)
+                    .orderStatus(OrderStatus.DELIVERED)
+                    .build();
             pizzaRepository.save(pizza);
             pizzaRepository.save(pizza2);
-            incomingOrderRepository.save(incomingOrder);
-            Customer customer = Customer.builder()
-                    .username("customer")
-                    .customerOrder(incomingOrder)
-                    .build();
+            incomingOrderRepository.save(activeOrder);
+            incomingOrderRepository.save(completedOrder);
+            customer.setCustomerOrders(new HashSet<>(){{add(activeOrder);
+                add(completedOrder);}});
+
             userRepository.save(customer);
+
             Cook cook = Cook.builder()
                     .username("cook")
-                    .assignedOrder(incomingOrder)
+                    .assignedOrder(activeOrder)
                     .build();
             userRepository.save(cook);
             Manager manager = Manager.builder()
@@ -82,7 +97,7 @@ public class PizzaBackendApplication {
             userRepository.save(manager);
             DeliveryGuy deliveryGuy = DeliveryGuy.builder()
                     .username("deliveryGuy")
-                    .order(incomingOrder)
+                    .order(activeOrder)
                     .build();
             userRepository.save(deliveryGuy);
 //            DeliveryGuy badDeliveryGuy = DeliveryGuy.builder()

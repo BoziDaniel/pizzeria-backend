@@ -22,8 +22,8 @@ import java.util.Set;
 
 public class Customer extends User {
 
-    @JoinTable(name="customer_orders")
-    @OneToMany
+//    @JoinTable(name="customer_orders")
+    @OneToMany(mappedBy = "customer")
     @Singular
     private Set<IncomingOrder> customerOrders;
 }

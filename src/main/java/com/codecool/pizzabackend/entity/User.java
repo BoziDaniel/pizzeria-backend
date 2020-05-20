@@ -17,7 +17,9 @@ public abstract class User {
     @GeneratedValue
     @Id
     private Long id;
+
     @Column(nullable = false, unique = true)
     private String username;
+
     private String name;
 }

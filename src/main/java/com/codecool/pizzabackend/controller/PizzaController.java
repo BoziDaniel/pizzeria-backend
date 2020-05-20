@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/pizzas")
 //@CrossOrigin(origins = "http://localhost:3000")
-@Component
 public class PizzaController {
 
     @Autowired
@@ -23,9 +22,9 @@ public class PizzaController {
 
     @GetMapping("/{page}")
     public List<Pizza> getPaginatedPizzas(@PathVariable("page") Integer page) {
-        LOGGER.info("get request: /pizzas/" + page + " arrived");
+        LOGGER.info("Get request: /pizzas/" + page + " arrived");
         List<Pizza> pizzas =  pizzaRepository.getPaginatedPizzas(page);
-        LOGGER.info(" Get request for endpoint/pizzas/" + page + " processed. \n Return value will be: " + pizzas.toString());
+        LOGGER.info(" Get request: /pizzas/" + page + " processed. \n Return value will be: " + pizzas.toString());
         return pizzas;
     }
 }
