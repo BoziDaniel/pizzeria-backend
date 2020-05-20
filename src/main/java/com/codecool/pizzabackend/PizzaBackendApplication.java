@@ -61,6 +61,20 @@ public class PizzaBackendApplication {
                     .build();
             userRepository.save(customer);
 
+            Customer customer1 = Customer.builder()
+                    .username("customer1")
+                    .build();
+            userRepository.save(customer1);
+
+            IncomingOrder customer1order = IncomingOrder.builder()
+                    .orderedPizzas(new HashMap<Pizza, Integer>(){{
+                        put(pizza,3);
+                        put(pizza2,3);
+                    }})
+                    .customer(customer)
+                    .orderStatus(OrderStatus.IN_PROGRESS)
+                    .build();
+
             IncomingOrder activeOrder = IncomingOrder.builder()
                     .orderedPizzas(new HashMap<Pizza, Integer>(){{
                         put(pizza,1);
@@ -83,7 +97,8 @@ public class PizzaBackendApplication {
             incomingOrderRepository.save(completedOrder);
             customer.setCustomerOrders(new HashSet<>(){{add(activeOrder);
                 add(completedOrder);}});
-
+            customer1.setCustomerOrders(new HashSet<>(){{add(customer1order);}});
+            userRepository.save(customer1);
             userRepository.save(customer);
 
             Cook cook = Cook.builder()

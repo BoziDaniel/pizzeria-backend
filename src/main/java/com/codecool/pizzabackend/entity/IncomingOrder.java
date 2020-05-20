@@ -1,6 +1,8 @@
 package com.codecool.pizzabackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,11 +28,12 @@ public class IncomingOrder {
     @MapKeyColumn(name = "pizza_name")
     @Column(name = "quantity")
     @Singular
+
     Map<Pizza, Integer> orderedPizzas;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @ManyToOne
-    @JsonIgnore
+    @JsonManagedReference
     private Customer customer;
 }

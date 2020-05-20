@@ -1,15 +1,14 @@
 package com.codecool.pizzabackend.controller;
 
+import com.codecool.pizzabackend.controller.dto.IncomingOrderDTO;
+import com.codecool.pizzabackend.controller.dto.PizzaQuantityDTO;
 import com.codecool.pizzabackend.entity.IncomingOrder;
 import com.codecool.pizzabackend.entity.OrderStatus;
 import com.codecool.pizzabackend.repository.IncomingOrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +31,11 @@ public List<IncomingOrder> getActiveOrdersForUser(@PathVariable("userId") Long u
     LOGGER.info(" Get request: /orders/active/" + userId +" processed. \n Return value will be: " + activeOrders.toString());
     return activeOrders;
 }
+@PostMapping("/{userId}")
+public void  createNewOrder(@PathVariable("userId") Long userId, @RequestBody IncomingOrderDTO incomingOrderDTO){
+    LOGGER.info("post request: /orders/" + userId + " arrived. payload: " + incomingOrderDTO.toString());
 
+    LOGGER.info("post request: /orders/" + userId + " processed");
+}
 
 }

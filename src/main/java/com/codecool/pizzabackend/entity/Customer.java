@@ -1,5 +1,6 @@
 package com.codecool.pizzabackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,6 @@ public class Customer extends User {
 //    @JoinTable(name="customer_orders")
     @OneToMany(mappedBy = "customer")
     @Singular
+    @JsonBackReference
     private Set<IncomingOrder> customerOrders;
 }
