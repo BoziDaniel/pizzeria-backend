@@ -9,12 +9,14 @@ import com.codecool.pizzabackend.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping(value = "/orders", consumes = MediaType.APPLICATION_JSON_VALUE)
 //@CrossOrigin(origins = "http://localhost:3000")
 public class IncomingOrderController {
 

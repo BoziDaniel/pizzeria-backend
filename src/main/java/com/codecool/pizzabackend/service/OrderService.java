@@ -30,8 +30,8 @@ public class OrderService {
     public void persistIncomingOrder(Long userId, IncomingOrderDTO incomingOrderDTO) {
         LOGGER.trace("Starting to create incoming order from userId: " + userId + "incomingOrderDTO: " + incomingOrderDTO.toString());
         HashMap<Pizza, Integer> pizzas = new HashMap<>();
-        for (PizzaQuantityDTO orderedPizza : incomingOrderDTO.getOrderedPizzas()) {
-            pizzas.put(pizzaRepository.getPizzaById(orderedPizza.getPizzaId()), orderedPizza.getQuantity());
+        for (PizzaQuantityDTO orderedPizzaQuantity : incomingOrderDTO.getIncomingOrderedPizzas()) {
+            pizzas.put(pizzaRepository.getPizzaById(orderedPizzaQuantity.getId()), orderedPizzaQuantity.getQuantity());
         }
         User customer = userRepository.getUserById(userId);
         IncomingOrder incomingOrder = IncomingOrder.builder()

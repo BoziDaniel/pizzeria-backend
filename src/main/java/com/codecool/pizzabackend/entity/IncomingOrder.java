@@ -34,6 +34,6 @@ public class IncomingOrder {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @ManyToOne
-    @JsonManagedReference
+    @JsonIgnore
     private Customer customer;
 }

@@ -22,4 +22,7 @@ public class Pizza {
 
     private String description;
 
+    public Pizza(Long id) {
+        this.id = id;
+    }
 }
