@@ -1,10 +1,9 @@
 package com.codecool.pizzabackend.controller;
 
-import com.codecool.pizzabackend.controller.dto.IncomingOrderDTO;
-import com.codecool.pizzabackend.controller.dto.PizzaQuantityDTO;
-import com.codecool.pizzabackend.entity.IncomingOrder;
-import com.codecool.pizzabackend.entity.OrderStatus;
-import com.codecool.pizzabackend.repository.IncomingOrderRepository;
+import com.codecool.pizzabackend.controller.dto.OrderrDTO;
+import com.codecool.pizzabackend.entity.Orderr;
+import com.codecool.pizzabackend.repository.OrderrRepository;
+import com.codecool.pizzabackend.repository.UserRepository;
 import com.codecool.pizzabackend.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,43 +11,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/orders", consumes = MediaType.APPLICATION_JSON_VALUE)
 //@CrossOrigin(origins = "http://localhost:3000")
-public class IncomingOrderController {
+public class OrderrController {
 
     @Autowired
-    private IncomingOrderRepository incomingOrderRepository;
+    private OrderrRepository orderrRepository;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private UserRepository userRepository;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(IncomingOrderController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderrController.class);
 
 
     @GetMapping("/active/{userId}")
-    public List<IncomingOrderDTO> getActiveOrdersForUser(@PathVariable("userId") Long userId) {
+    public List<OrderrDTO> getActiveOrdersForUser(@PathVariable("userId") Long userId) {
         LOGGER.info("get request: /orders/active/" + userId + " arrived");
-        List<IncomingOrderDTO> activieOrderDTOs = orderService.listActiveOrdersForUser(userId);
+        List<OrderrDTO> activieOrderDTOs = orderService.listActiveOrdersForUser(userId);
         LOGGER.info(" Get request: /orders/active/" + userId + " processed. \n Return value will be: " + activieOrderDTOs.toString());
         return activieOrderDTOs;
     }
 
-    @GetMapping("/active/all")
-    public List<IncomingOrderDTO> getActiveOrdersForUser() {
-        LOGGER.info("get request: /orders/active/all arrived");
-        List<IncomingOrderDTO> activieOrderDTOs = orderService.listActiveOrdersForUser(userId);
-        LOGGER.info(" Get request: /orders/active/all processed. \n Return value will be: " + activieOrderDTOs.toString());
-        return activieOrderDTOs;
-    }
+//    @GetMapping("/active/all")
+//    public List<OrderrDTO> getAllActiveUsers() {
+//        LOGGER.info("get request: /orders/active/all arrived");
+//        List<OrderrDTO> activieOrderDTOs = orderService.listAllActiveOrders();
+//        LOGGER.info(" Get request: /orders/active/all processed. \n Return value will be: " + activieOrderDTOs.toString());
+//        return activieOrderDTOs;
+//    }
 
     @PostMapping("/{userId}")
-    public void createNewOrder(@PathVariable("userId") Long userId, @RequestBody IncomingOrderDTO incomingOrderDTO) {
-        LOGGER.info("post request: /orders/" + userId + " arrived. payload: " + incomingOrderDTO.toString());
-        orderService.persistIncomingOrder(userId, incomingOrderDTO);
+    public void createNewOrder(@PathVariable("userId") Long userId, @RequestBody OrderrDTO orderrDTO) {
+        LOGGER.info("post request: /orders/" + userId + " arrived. payload: " + orderrDTO.toString());
+        orderService.persistIncomingOrder(userId, orderrDTO);
         LOGGER.info("post request: /orders/" + userId + " processed.");
     }
+
+//    @GetMapping("/test/{userId}")
+//    public List<Orderr> testEndpoint(@PathVariable("userId") Long userId){
+//        return orderrRepository.getCooksActiveAssignedOrders(userId);
+//    }
 
 }

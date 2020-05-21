@@ -1,18 +1,14 @@
 package com.codecool.pizzabackend.entity;
 
-import com.codecool.pizzabackend.controller.IncomingOrderController;
-import com.codecool.pizzabackend.controller.dto.IncomingOrderDTO;
+import com.codecool.pizzabackend.controller.dto.OrderrDTO;
 import com.codecool.pizzabackend.controller.dto.PizzaQuantityDTO;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +17,8 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 @Entity
-public class IncomingOrder {
-    private static final Logger LOGGER = LoggerFactory.getLogger(IncomingOrder.class);
+public class Orderr {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Orderr.class);
 
     @GeneratedValue
     @Id
@@ -45,21 +41,21 @@ public class IncomingOrder {
     @JsonIgnore
     private Customer customer;
 
-    public IncomingOrderDTO generateIncomingOrderDTO() {
+    public OrderrDTO generateIncomingOrderDTO() {
         List<PizzaQuantityDTO> pizzaDTOs = new ArrayList<>();
         for (Pizza pizza : orderedPizzas.keySet()) {
             PizzaQuantityDTO pizzaDTO = generateDTOfromPizza(pizza);
             pizzaDTOs.add(pizzaDTO);
         }
 
-        IncomingOrderDTO incomingOrderDTO = IncomingOrderDTO.builder()
+        OrderrDTO orderrDTO = OrderrDTO.builder()
                 .id(this.getId())
                 .orderStatus(this.getOrderStatus())
                 .customer(this.getCustomer())
                 .incomingOrderedPizzas(pizzaDTOs)
                 .build();
-        LOGGER.debug("incomingorderDTO: " + incomingOrderDTO.toString());
-        return incomingOrderDTO;
+        LOGGER.debug("incomingorderDTO: " + orderrDTO.toString());
+        return orderrDTO;
     }
 
     private PizzaQuantityDTO generateDTOfromPizza(Pizza pizza) {

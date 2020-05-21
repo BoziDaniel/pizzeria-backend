@@ -23,5 +23,5 @@ public class DeliveryGuy extends User{
     @JoinTable(name="delivery_guy_orders_to_deliver")
     @OneToMany
     @Singular
-    private Set<IncomingOrder> orders;
+    private Set<Orderr> assignedOrders;
 }
