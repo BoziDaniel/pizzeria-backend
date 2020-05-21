@@ -12,12 +12,13 @@ import javax.persistence.*;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-
 public abstract class User {
     @GeneratedValue
     @Id
     private Long id;
 
+    //@Column(nullable = false, unique = true)
     private String username;
 
+    private String name;
 }

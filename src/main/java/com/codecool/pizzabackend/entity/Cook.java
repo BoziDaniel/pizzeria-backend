@@ -23,6 +23,6 @@ public class Cook extends User {
     @JoinTable(name="cook_assigned_orders")
     @OneToMany
     @Singular
-    private Set<IncomingOrder> assignedOrders;
+    private Set<Orderr> assignedOrders;
 
 }

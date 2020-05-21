@@ -1,9 +1,6 @@
 package com.codecool.pizzabackend.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,5 +21,10 @@ public class Pizza {
     private String name;
 
     private String description;
+
+    public Pizza(Long id) {
+        this.id = id;
+    }
+
 
 }

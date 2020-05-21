@@ -1,7 +1,8 @@
 package com.codecool.pizzabackend;
 
 import com.codecool.pizzabackend.entity.*;
-import com.codecool.pizzabackend.repository.IncomingOrderRepository;
+import com.codecool.pizzabackend.init.DbInitializer;
+import com.codecool.pizzabackend.repository.OrderrRepository;
 import com.codecool.pizzabackend.repository.PizzaRepository;
 import com.codecool.pizzabackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
-import javax.persistence.MapKey;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 
 @SpringBootApplication
 public class PizzaBackendApplication {
@@ -24,61 +23,13 @@ public class PizzaBackendApplication {
     }
 
     @Autowired
-    private PizzaRepository pizzaRepository;
-    @Autowired
-    private IncomingOrderRepository incomingOrderRepository;
-    @Autowired
-    private UserRepository userRepository;
+    DbInitializer dbInitializer;
 
     @Bean
     @Profile("production")
     public CommandLineRunner init() {
-
         return args -> {
-            Pizza pizza = Pizza.builder()
-                    .name("Testpizza")
-                    .description("tastes reeel goooood")
-                    .build();
-
-            Pizza pizza2 = Pizza.builder()
-                    .name("Testpizza2")
-                    .description("tastes reeel baaaaad ")
-                    .build();
-
-//            Pizza pizza3 = Pizza.builder()
-//                    .name("Testpizza")
-//                    .description("tastes reeel goooood")
-//                    .build();
-
-            IncomingOrder incomingOrder = IncomingOrder.builder()
-                    .orderedPizzas(new HashMap<Pizza, Integer>(){{
-                        put(pizza,1);
-                        put(pizza2,5);
-                    }})
-                    .build();
-
-            pizzaRepository.save(pizza);
-            pizzaRepository.save(pizza2);
-            incomingOrderRepository.save(incomingOrder);
-            Customer customer = Customer.builder()
-                    .username("customer")
-                    .customerOrder(incomingOrder)
-                    .build();
-            userRepository.save(customer);
-            Cook cook = Cook.builder()
-                    .username("cook")
-                    .assignedOrder(incomingOrder)
-                    .build();
-            userRepository.save(cook);
-            Manager manager = Manager.builder()
-                    .username("manager")
-                    .build();
-            userRepository.save(manager);
-            DeliveryGuy deliveryGuy = DeliveryGuy.builder()
-                    .username("deliveryGuy")
-                    .order(incomingOrder)
-                    .build();
-            userRepository.save(deliveryGuy);
+            dbInitializer.intializeDatabase();
         };
 
     }

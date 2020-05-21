@@ -1,5 +1,6 @@
 package com.codecool.pizzabackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,6 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import java.util.Set;
 
@@ -17,13 +17,10 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 @SuperBuilder
-
 public class Customer extends User {
-
-    @JoinTable(name="customer_orders")
-    @OneToMany
+    @OneToMany(mappedBy = "customer")
     @Singular
-    private Set<IncomingOrder> customerOrders;
+    @JsonIgnore
+    private Set<Orderr> customerOrders;
 }
