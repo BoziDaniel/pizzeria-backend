@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface IncomingOrderRepository extends JpaRepository<IncomingOrder, Long> {
     List<IncomingOrder> getIncomingOrdersByOrderStatusNotLikeAndCustomer_IdIs(OrderStatus orderStatus, Long id);
+    List<IncomingOrder> getIncomingOrdersByOrderStatusNotLike(OrderStatus orderStatus);
 }
