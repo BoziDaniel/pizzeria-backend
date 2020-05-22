@@ -37,24 +37,10 @@ public class OrderrController {
         return activieOrderDTOs;
     }
 
-//    @GetMapping("/active/all")
-//    public List<OrderrDTO> getAllActiveUsers() {
-//        LOGGER.info("get request: /orders/active/all arrived");
-//        List<OrderrDTO> activieOrderDTOs = orderService.listAllActiveOrders();
-//        LOGGER.info(" Get request: /orders/active/all processed. \n Return value will be: " + activieOrderDTOs.toString());
-//        return activieOrderDTOs;
-//    }
-
     @PostMapping("/{userId}")
     public void createNewOrder(@PathVariable("userId") Long userId, @RequestBody OrderrDTO orderrDTO) {
         LOGGER.info("post request: /orders/" + userId + " arrived. payload: " + orderrDTO.toString());
         orderService.persistIncomingOrder(userId, orderrDTO);
         LOGGER.info("post request: /orders/" + userId + " processed.");
     }
-
-//    @GetMapping("/test/{userId}")
-//    public List<Orderr> testEndpoint(@PathVariable("userId") Long userId){
-//        return orderrRepository.getCooksActiveAssignedOrders(userId);
-//    }
-
 }

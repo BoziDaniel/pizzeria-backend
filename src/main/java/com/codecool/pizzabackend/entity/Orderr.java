@@ -60,11 +60,11 @@ public class Orderr {
 
     private PizzaQuantityDTO generateDTOfromPizza(Pizza pizza) {
         PizzaQuantityDTO pizzaDTO = PizzaQuantityDTO.builder()
-                        .id(pizza.getId())
-                        .name(pizza.getName())
-                        .description(pizza.getDescription())
-                        .quantity(orderedPizzas.get(pizza))
-                        .build();
+                .id(pizza.getId())
+                .name(pizza.getName())
+                .description(pizza.getDescription())
+                .quantity(orderedPizzas.get(pizza))
+                .build();
 
 
         return pizzaDTO;

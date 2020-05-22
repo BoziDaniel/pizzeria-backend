@@ -20,7 +20,7 @@ import java.util.Set;
 @DiscriminatorValue("Cook")
 public class Cook extends User {
 
-    @JoinTable(name="cook_assigned_orders")
+    @JoinTable(name = "cook_assigned_orders")
     @OneToMany
     @Singular
     private Set<Orderr> assignedOrders;
