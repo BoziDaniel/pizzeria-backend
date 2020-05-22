@@ -62,30 +62,30 @@ public class OrderService {
         return orderDTOs;
     }
 
-    public List<OrderrDTO> listActiveOrdersForUser(Long userId){
+    public List<OrderrDTO> listActiveOrdersForUser(Long userId) {
         LOGGER.info("listActiveOrdersForUser started");
         //TODO: Maybe do the the whole thing in one sql.
         String userRole = userRepository.getUserRoleByUserId(userId);
         LOGGER.info(" User role queired for userid: " + userId + " found role: " + userRole);
         List<Orderr> activeOrders = new ArrayList<>();
-        switch (userRole){
+        switch (userRole) {
             case "Customer": {
-                LOGGER.info("Starting to list orders for customer. user id: "+ userId);
-                activeOrders = orderrRepository.getOrderrsByOrderStatusNotLikeAndCustomer_IdIs( userId, OrderStatus.DELIVERED);
+                LOGGER.info("Starting to list orders for customer. user id: " + userId);
+                activeOrders = orderrRepository.getOrderrsByOrderStatusNotLikeAndCustomer_IdIs(OrderStatus.DELIVERED, userId);
                 break;
             }
             case "Manager": {
-                LOGGER.info("Starting to list orders for manager. user id: "+ userId);
+                LOGGER.info("Starting to list orders for manager. user id: " + userId);
                 activeOrders = orderrRepository.getOrderrsByOrderStatusNotLike(OrderStatus.DELIVERED);
                 break;
             }
             case "Cook": {
-                LOGGER.info("Starting to list orders for cook. user id: "+ userId);
+                LOGGER.info("Starting to list orders for cook. user id: " + userId);
                 activeOrders = orderrRepository.getCookActiveAssignedOrders(userId);
                 break;
             }
             case "DeliveryGuy": {
-                LOGGER.info("Starting to list orders for deliveryGuy. user id: "+ userId);
+                LOGGER.info("Starting to list orders for deliveryGuy. user id: " + userId);
                 activeOrders = orderrRepository.getDeliveryGuyActiveAssignedOrders(userId);
                 break;
             }

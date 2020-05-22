@@ -35,7 +35,7 @@ public class DbInitializer {
 
         Pizza pizza2 = Pizza.builder()
                 .name("Testpizza2")
-                .description("tastes reeel baaaaad ")
+                .description("tastes good ")
                 .build();
         Pizza pizza3 = Pizza.builder()
                 .name("Testpizza3")
