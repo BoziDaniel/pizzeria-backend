@@ -57,6 +57,7 @@ public class OrderService {
     public List<OrderrDTO> listActiveOrdersForUser(Long userId) {
         LOGGER.info("listActiveOrdersForUser started");
         //TODO: Maybe do the the whole thing in one sql.
+        //TODO: error handling!
         String userRole = userRepository.getUserRoleByUserId(userId);
         LOGGER.info(" User role queired for userid: " + userId + " found role: " + userRole);
         List<Orderr> activeOrders = new ArrayList<>();

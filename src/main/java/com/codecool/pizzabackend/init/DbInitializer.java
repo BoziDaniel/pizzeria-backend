@@ -20,6 +20,7 @@ public class DbInitializer {
     private UserRepository userRepository;
 
     public void intializeDatabase() {
+        //PizzaCretion
         for (int i = 1; i < 21; i++) {
             String pizzaName = "pizza_" + i;
             Pizza pizzaa = Pizza.builder()
@@ -142,6 +143,7 @@ public class DbInitializer {
                 .assignedOrder(deliveredOrder)
                 .build();
         userRepository.save(cook);
+
         Manager manager = Manager.builder()
                 .username("manager")
                 .build();
@@ -152,5 +154,15 @@ public class DbInitializer {
                 .assignedOrder(deliveredOrder)
                 .build();
         userRepository.save(deliveryGuy);
+        inprogressOrder.setCook(cook);
+        readyOrder.setCook(cook);
+        indeliveryOrder.setCook(cook);
+        deliveredOrder.setCook(cook);
+        indeliveryOrder.setDeliveryGuy(deliveryGuy);
+        deliveredOrder.setDeliveryGuy(deliveryGuy);
+        orderrRepository.save(inprogressOrder);
+        orderrRepository.save(readyOrder);
+        orderrRepository.save(indeliveryOrder);
+        orderrRepository.save(deliveredOrder);
     }
 }

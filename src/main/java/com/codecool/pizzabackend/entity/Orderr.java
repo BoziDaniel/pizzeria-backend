@@ -41,6 +41,18 @@ public class Orderr {
     @JsonIgnore
     private Customer customer;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne
+    @JsonIgnore
+    private Cook cook;
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne
+    @JsonIgnore
+    private DeliveryGuy deliveryGuy;
+
     public OrderrDTO generateIncomingOrderDTO() {
         List<PizzaQuantityDTO> pizzaDTOs = new ArrayList<>();
         for (Pizza pizza : orderedPizzas.keySet()) {
