@@ -1,24 +1,20 @@
-package com.codecool.pizzabackend.entity;
+package com.codecool.pizzabackend.security;
 
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Entity
-@DiscriminatorColumn(name = "usertype")
 @Data
-@SuperBuilder
-@NoArgsConstructor
-@AllArgsConstructor
-public class User implements UserDetails{
+public class UserCredential implements UserDetails{
     @GeneratedValue
     @Id
     private Long id;
@@ -39,32 +35,28 @@ public class User implements UserDetails{
     private  boolean isCredentialsNonExpired;
     private  boolean isEnabled;
 
-    public User(String username,
+    public UserCredential(String username,
                 String password,
                 String name,
                 String role,
-                Set<SimpleGrantedAuthority> grantedAuthorities,
                 boolean isAccountNonExpired,
                 boolean isAccountNonLocked,
                 boolean isCredentialsNonExpired,
                 boolean isEnabled
-                           ){
+    ){
         this.username = username;
         this.name = name;
         this.password = password;
         this.role = role;
-        if(grantedAuthorities!=null){
-            this.grantedAuthorities = grantedAuthorities;
-        }else {
-            this.grantedAuthorities = new HashSet<>();
+        this.grantedAuthorities = new HashSet<>();
         }
 
-        this.isAccountNonExpired = isAccountNonExpired;
-        this.isAccountNonLocked = isAccountNonLocked;
-        this.isCredentialsNonExpired = isCredentialsNonExpired;
-        this.isEnabled = isEnabled;
-        initializeGrantedAuthorities();
-    }
+//        this.isAccountNonExpired = isAccountNonExpired;
+//        this.isAccountNonLocked = isAccountNonLocked;
+//        this.isCredentialsNonExpired = isCredentialsNonExpired;
+//        this.isEnabled = isEnabled;
+//        initializeGrantedAuthorities();
+//    }
 
     private void initializeGrantedAuthorities(){
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + "CUSTOMER"));

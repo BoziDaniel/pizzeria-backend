@@ -5,6 +5,7 @@ import com.codecool.pizzabackend.repository.PizzaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pizzas")
-//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PizzaController {
 
     @Autowired
@@ -21,6 +22,7 @@ public class PizzaController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PizzaController.class);
 
     @GetMapping("/{page}")
+    @PreAuthorize("hasAnyAuthority('customer:read', 'cook:read', 'manager:read', 'deliveryguy:read')")
     public List<Pizza> getPaginatedPizzas(@PathVariable("page") Integer page) {
         LOGGER.info("Get request: /pizzas/" + page + " arrived");
         List<Pizza> pizzas =  pizzaRepository.getPaginatedPizzas(page);

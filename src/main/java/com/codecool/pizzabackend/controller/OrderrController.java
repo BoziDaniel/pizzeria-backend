@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/orders", consumes = MediaType.APPLICATION_JSON_VALUE)
-//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class OrderrController {
 
     @Autowired
@@ -28,7 +29,7 @@ public class OrderrController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderrController.class);
 
-
+    @PreAuthorize("hasAnyAuthority('customer:read', 'cook:read', 'manager:read', 'deliveryguy:read')")
     @GetMapping("/active/{userId}")
     public List<OrderrDTO> getActiveOrdersForUser(@PathVariable("userId") Long userId) {
         LOGGER.info("get request: /orders/active/" + userId + " arrived");
@@ -37,24 +38,12 @@ public class OrderrController {
         return activieOrderDTOs;
     }
 
-//    @GetMapping("/active/all")
-//    public List<OrderrDTO> getAllActiveUsers() {
-//        LOGGER.info("get request: /orders/active/all arrived");
-//        List<OrderrDTO> activieOrderDTOs = orderService.listAllActiveOrders();
-//        LOGGER.info(" Get request: /orders/active/all processed. \n Return value will be: " + activieOrderDTOs.toString());
-//        return activieOrderDTOs;
-//    }
-
+    @PreAuthorize("hasAnyAuthority('customer:write')")
     @PostMapping("/{userId}")
     public void createNewOrder(@PathVariable("userId") Long userId, @RequestBody OrderrDTO orderrDTO) {
         LOGGER.info("post request: /orders/" + userId + " arrived. payload: " + orderrDTO.toString());
         orderService.persistIncomingOrder(userId, orderrDTO);
         LOGGER.info("post request: /orders/" + userId + " processed.");
     }
-
-//    @GetMapping("/test/{userId}")
-//    public List<Orderr> testEndpoint(@PathVariable("userId") Long userId){
-//        return orderrRepository.getCooksActiveAssignedOrders(userId);
-//    }
 
 }

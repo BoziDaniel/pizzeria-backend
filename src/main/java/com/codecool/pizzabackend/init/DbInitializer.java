@@ -47,11 +47,23 @@ public class DbInitializer {
 
         Customer customer = Customer.builder()
                 .username("customer")
+                .role("customer")
+                .password("pass")
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .isEnabled(true)
                 .build();
         userRepository.save(customer);
 
         Customer customer1 = Customer.builder()
                 .username("customer1")
+                .role("customer")
+                .password("pass")
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .isEnabled(true)
                 .build();
         userRepository.save(customer1);
 
@@ -132,6 +144,12 @@ public class DbInitializer {
 
         Cook cook = Cook.builder()
                 .username("cook")
+                .password("pass")
+                .role("Cook")
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .isEnabled(true)
                 .assignedOrder(inprogressOrder)
                 .assignedOrder(readyOrder)
                 .assignedOrder(indeliveryOrder)
@@ -140,12 +158,24 @@ public class DbInitializer {
         userRepository.save(cook);
         Manager manager = Manager.builder()
                 .username("manager")
+                .role("Manager")
+                .password("pass")
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .isEnabled(true)
                 .build();
         userRepository.save(manager);
         DeliveryGuy deliveryGuy = DeliveryGuy.builder()
                 .username("deliveryGuy")
+                .role("Deliveryguy")
+                .password("pass")
                 .assignedOrder(indeliveryOrder)
                 .assignedOrder(deliveredOrder)
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .isEnabled(true)
                 .build();
         userRepository.save(deliveryGuy);
     }
