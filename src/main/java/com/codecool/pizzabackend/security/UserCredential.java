@@ -49,17 +49,17 @@ public class UserCredential implements UserDetails{
         this.password = password;
         this.role = role;
         this.grantedAuthorities = new HashSet<>();
-        }
 
-//        this.isAccountNonExpired = isAccountNonExpired;
-//        this.isAccountNonLocked = isAccountNonLocked;
-//        this.isCredentialsNonExpired = isCredentialsNonExpired;
-//        this.isEnabled = isEnabled;
-//        initializeGrantedAuthorities();
-//    }
+
+        this.isAccountNonExpired = isAccountNonExpired;
+        this.isAccountNonLocked = isAccountNonLocked;
+        this.isCredentialsNonExpired = isCredentialsNonExpired;
+        this.isEnabled = isEnabled;
+        initializeGrantedAuthorities();
+    }
 
     private void initializeGrantedAuthorities(){
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + "CUSTOMER"));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + this.role.toUpperCase()));
     }
 
     @Override

@@ -36,19 +36,19 @@ public class UserService implements UserDetailsService {
 //                .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
 //        LOGGER.info(String.format("User found. User info: %s", foundUser));
 
-//        LOGGER.info(username);
-//        User foundUser = userRepository.getAppUserByUsername(username)
-//                .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
-//        LOGGER.info(String.format("User found. User info: %s", foundUser));
+        LOGGER.info(username);
+        UserCredential foundUser = userRepository.getUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
+        LOGGER.info(String.format("User found. User info: %s", foundUser));
 
-        User foundUser = new User("customer",
-                 passwordEncoder.encode("pass"),
-                "customer",
-                "Customer",
-                null, true,
-                true,
-                true,
-                true);
+//        User foundUser = new User("customer",
+//                 passwordEncoder.encode("pass"),
+//                "customer",
+//                "Customer",
+//                null, true,
+//                true,
+//                true,
+//                true);
         return foundUser;
     }
 }

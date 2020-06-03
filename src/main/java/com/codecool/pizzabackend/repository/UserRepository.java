@@ -16,9 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT ROLE FROM USER WHERE ID=?1", nativeQuery = true)
     String getUserRoleByUserId(Long userId);
 
-    @Query(value = "SELECT ID, " +
-            "ROLE,IS_ACCOUNT_NON_EXPIRED,IS_ACCOUNT_NON_LOCKED, IS_CREDENTIALS_NON_EXPIRED, IS_ENABLED,NAME,PASSWORD,USERNAME, FROM USER WHERE USERNAME=?1", nativeQuery = true)
-    Optional<UserCredential> findUserByUsername(String username);
+//    @Query(value = "SELECT ID, ROLE,IS_ACCOUNT_NON_EXPIRED,IS_ACCOUNT_NON_LOCKED, IS_CREDENTIALS_NON_EXPIRED, IS_ENABLED,NAME,PASSWORD,USERNAME, FROM USER WHERE USERNAME=?1")
+//    Optional<UserCredential> findUserByUsername(String username);
 
-    //Optional<User> getAppUserByUsername(String userName);
+    Optional<UserCredential> getUserByUsername(String userName);
 }

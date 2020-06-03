@@ -29,7 +29,8 @@ public class OrderrController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderrController.class);
 
-    @PreAuthorize("hasAnyAuthority('customer:read', 'cook:read', 'manager:read', 'deliveryguy:read')")
+    //@PreAuthorize("hasAnyAuthority('customer:read', 'cook:read', 'manager:read', 'deliveryguy:read')")
+    @PreAuthorize("hasAnyRole('ROLE_COOK')")
     @GetMapping("/active/{userId}")
     public List<OrderrDTO> getActiveOrdersForUser(@PathVariable("userId") Long userId) {
         LOGGER.info("get request: /orders/active/" + userId + " arrived");

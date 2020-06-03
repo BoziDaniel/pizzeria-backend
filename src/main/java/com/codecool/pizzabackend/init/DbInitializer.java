@@ -5,6 +5,7 @@ import com.codecool.pizzabackend.repository.OrderrRepository;
 import com.codecool.pizzabackend.repository.PizzaRepository;
 import com.codecool.pizzabackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -18,6 +19,14 @@ public class DbInitializer {
     private OrderrRepository orderrRepository;
     @Autowired
     private UserRepository userRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public DbInitializer(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     public void intializeDatabase(){
         for (int i = 1; i < 21; i++) {
             String pizzaName = "pizza_" + i;
@@ -48,7 +57,7 @@ public class DbInitializer {
         Customer customer = Customer.builder()
                 .username("customer")
                 .role("customer")
-                .password("pass")
+                .password(passwordEncoder.encode("pass"))
                 .isAccountNonExpired(true)
                 .isAccountNonLocked(true)
                 .isCredentialsNonExpired(true)
@@ -59,7 +68,7 @@ public class DbInitializer {
         Customer customer1 = Customer.builder()
                 .username("customer1")
                 .role("customer")
-                .password("pass")
+                .password(passwordEncoder.encode("pass"))
                 .isAccountNonExpired(true)
                 .isAccountNonLocked(true)
                 .isCredentialsNonExpired(true)
@@ -144,7 +153,7 @@ public class DbInitializer {
 
         Cook cook = Cook.builder()
                 .username("cook")
-                .password("pass")
+                .password(passwordEncoder.encode("pass"))
                 .role("Cook")
                 .isAccountNonExpired(true)
                 .isAccountNonLocked(true)
@@ -159,7 +168,7 @@ public class DbInitializer {
         Manager manager = Manager.builder()
                 .username("manager")
                 .role("Manager")
-                .password("pass")
+                .password(passwordEncoder.encode("pass"))
                 .isAccountNonExpired(true)
                 .isAccountNonLocked(true)
                 .isCredentialsNonExpired(true)
@@ -169,7 +178,7 @@ public class DbInitializer {
         DeliveryGuy deliveryGuy = DeliveryGuy.builder()
                 .username("deliveryGuy")
                 .role("Deliveryguy")
-                .password("pass")
+                .password(passwordEncoder.encode("pass"))
                 .assignedOrder(indeliveryOrder)
                 .assignedOrder(deliveredOrder)
                 .isAccountNonExpired(true)

@@ -1,5 +1,6 @@
 package com.codecool.pizzabackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,6 +28,7 @@ public class User implements UserDetails{
     private String username;
     private String name;
 
+    @JsonIgnore
     private  String password;
     @Transient
     private Set<SimpleGrantedAuthority> grantedAuthorities;
@@ -67,7 +69,7 @@ public class User implements UserDetails{
     }
 
     private void initializeGrantedAuthorities(){
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + "CUSTOMER"));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
     }
 
     @Override
