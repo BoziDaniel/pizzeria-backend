@@ -19,7 +19,7 @@ public class PizzaBackendApplication {
     DbInitializer dbInitializer;
 
     @Bean
-    @Profile("production")
+    @Profile("dev")
     public CommandLineRunner init() {
         return args -> {
             dbInitializer.intializeDatabase();

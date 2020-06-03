@@ -26,6 +26,7 @@ public class DbInitializer {
             Pizza pizzaa = Pizza.builder()
                     .name(pizzaName)
                     .description("tastes reeel goooood")
+                    .price(3000)
                     .build();
             pizzaRepository.save(pizzaa);
         }
@@ -33,15 +34,18 @@ public class DbInitializer {
         Pizza pizza = Pizza.builder()
                 .name("Testpizza")
                 .description("tastes reeel goooood")
+                .price(6000)
                 .build();
 
         Pizza pizza2 = Pizza.builder()
                 .name("Testpizza2")
                 .description("tastes good ")
+                .price(6000)
                 .build();
         Pizza pizza3 = Pizza.builder()
                 .name("Testpizza3")
                 .description("tastes reeel baaaaad ")
+                .price(8000)
                 .build();
         pizzaRepository.save(pizza);
         pizzaRepository.save(pizza2);

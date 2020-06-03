@@ -22,6 +22,8 @@ public class Pizza {
 
     private String description;
 
+
+    private int price;
     public Pizza(Long id) {
         this.id = id;
     }
