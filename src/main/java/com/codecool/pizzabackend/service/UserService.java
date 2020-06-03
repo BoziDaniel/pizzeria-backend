@@ -51,4 +51,10 @@ public class UserService implements UserDetailsService {
 //                true);
         return foundUser;
     }
+
+    public Long getUserIdbyUsername(String username){
+        UserCredential user = userRepository.getUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("Username: %s  not found", username)));
+        return user.getId();
+    }
 }

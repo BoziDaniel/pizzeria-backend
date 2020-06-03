@@ -15,16 +15,11 @@ import java.util.Set;
 
 @Data
 public class UserCredential implements UserDetails{
-    @GeneratedValue
-    @Id
     private Long id;
-
-    @Column(nullable = false, unique = true)
     private String username;
     private String name;
-
     private  String password;
-    @Transient
+
     private Set<SimpleGrantedAuthority> grantedAuthorities;
 
 
@@ -35,7 +30,9 @@ public class UserCredential implements UserDetails{
     private  boolean isCredentialsNonExpired;
     private  boolean isEnabled;
 
-    public UserCredential(String username,
+    public UserCredential(
+                Long id,
+                String username,
                 String password,
                 String name,
                 String role,
@@ -44,6 +41,7 @@ public class UserCredential implements UserDetails{
                 boolean isCredentialsNonExpired,
                 boolean isEnabled
     ){
+        this.id = id;
         this.username = username;
         this.name = name;
         this.password = password;

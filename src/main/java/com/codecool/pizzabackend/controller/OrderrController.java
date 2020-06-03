@@ -34,6 +34,7 @@ public class OrderrController {
     @GetMapping("/active/{userId}")
     public List<OrderrDTO> getActiveOrdersForUser(@PathVariable("userId") Long userId) {
         LOGGER.info("get request: /orders/active/" + userId + " arrived");
+        // TODO: userId = szed ki a tokenből a useridt
         List<OrderrDTO> activieOrderDTOs = orderService.listActiveOrdersForUser(userId);
         LOGGER.info(" Get request: /orders/active/" + userId + " processed. \n Return value will be: " + activieOrderDTOs.toString());
         return activieOrderDTOs;
