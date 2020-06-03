@@ -41,6 +41,18 @@ public class Orderr {
     @JsonIgnore
     private Customer customer;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne
+    @JsonIgnore
+    private Cook cook;
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne
+    @JsonIgnore
+    private DeliveryGuy deliveryGuy;
+
     public OrderrDTO generateIncomingOrderDTO() {
         List<PizzaQuantityDTO> pizzaDTOs = new ArrayList<>();
         for (Pizza pizza : orderedPizzas.keySet()) {
@@ -60,11 +72,11 @@ public class Orderr {
 
     private PizzaQuantityDTO generateDTOfromPizza(Pizza pizza) {
         PizzaQuantityDTO pizzaDTO = PizzaQuantityDTO.builder()
-                        .id(pizza.getId())
-                        .name(pizza.getName())
-                        .description(pizza.getDescription())
-                        .quantity(orderedPizzas.get(pizza))
-                        .build();
+                .id(pizza.getId())
+                .name(pizza.getName())
+                .description(pizza.getDescription())
+                .quantity(orderedPizzas.get(pizza))
+                .build();
 
 
         return pizzaDTO;
