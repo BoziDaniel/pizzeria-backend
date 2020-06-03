@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/orders", consumes = MediaType.APPLICATION_JSON_VALUE)
-//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class OrderrController {
 
     @Autowired

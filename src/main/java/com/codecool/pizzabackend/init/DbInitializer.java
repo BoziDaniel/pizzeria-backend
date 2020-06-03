@@ -5,6 +5,8 @@ import com.codecool.pizzabackend.repository.OrderrRepository;
 import com.codecool.pizzabackend.repository.PizzaRepository;
 import com.codecool.pizzabackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -18,7 +20,7 @@ public class DbInitializer {
     private OrderrRepository orderrRepository;
     @Autowired
     private UserRepository userRepository;
-
+    private final PasswordEncoder passwordEncoder= PasswordEncoderFactories.createDelegatingPasswordEncoder();
     public void intializeDatabase() {
         //PizzaCretion
         for (int i = 1; i < 21; i++) {
@@ -53,11 +55,15 @@ public class DbInitializer {
 
         Customer customer = Customer.builder()
                 .username("customer")
+                .password(passwordEncoder.encode("pass"))
+                .role("ROLE_CUSTOMER")
                 .build();
         userRepository.save(customer);
 
         Customer customer1 = Customer.builder()
                 .username("customer1")
+                .password(passwordEncoder.encode("pass"))
+                .role("ROLE_CUSTOMER")
                 .build();
         userRepository.save(customer1);
 
@@ -141,6 +147,8 @@ public class DbInitializer {
 
         Cook cook = Cook.builder()
                 .username("cook")
+                .password(passwordEncoder.encode("pass"))
+                .role("ROLE_COOK")
                 .assignedOrder(inprogressOrder)
                 .assignedOrder(readyOrder)
                 .assignedOrder(indeliveryOrder)
@@ -150,10 +158,14 @@ public class DbInitializer {
 
         Manager manager = Manager.builder()
                 .username("manager")
+                .role("ROLE_MANAGER")
+                .password(passwordEncoder.encode("pass"))
                 .build();
         userRepository.save(manager);
         DeliveryGuy deliveryGuy = DeliveryGuy.builder()
                 .username("deliveryGuy")
+                .password(passwordEncoder.encode("pass"))
+                .role("ROLE_DELIVERYGUY")
                 .assignedOrder(indeliveryOrder)
                 .assignedOrder(deliveredOrder)
                 .build();
