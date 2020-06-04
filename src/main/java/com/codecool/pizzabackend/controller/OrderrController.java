@@ -1,7 +1,6 @@
 package com.codecool.pizzabackend.controller;
 
 import com.codecool.pizzabackend.controller.dto.OrderrDTO;
-import com.codecool.pizzabackend.entity.Orderr;
 import com.codecool.pizzabackend.jwt.JwtTokenService;
 import com.codecool.pizzabackend.repository.OrderrRepository;
 import com.codecool.pizzabackend.repository.UserRepository;
@@ -9,17 +8,14 @@ import com.codecool.pizzabackend.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/orders", consumes = MediaType.APPLICATION_JSON_VALUE)
-//@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping(value = "/orders")
 public class OrderrController {
 
     @Autowired

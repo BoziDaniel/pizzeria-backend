@@ -177,7 +177,7 @@ public class DbInitializer {
         userRepository.save(manager);
         DeliveryGuy deliveryGuy = DeliveryGuy.builder()
                 .username("deliveryGuy")
-                .role("Deliveryguy")
+                .role("Delivery_Guy")
                 .password(passwordEncoder.encode("pass"))
                 .assignedOrder(indeliveryOrder)
                 .assignedOrder(deliveredOrder)
@@ -187,5 +187,15 @@ public class DbInitializer {
                 .isEnabled(true)
                 .build();
         userRepository.save(deliveryGuy);
+        inprogressOrder.setCook(cook);
+        readyOrder.setCook(cook);
+        indeliveryOrder.setCook(cook);
+        deliveredOrder.setCook(cook);
+        indeliveryOrder.setDeliveryGuy(deliveryGuy);
+        deliveredOrder.setDeliveryGuy(deliveryGuy);
+        orderrRepository.save(inprogressOrder);
+        orderrRepository.save(readyOrder);
+        orderrRepository.save(indeliveryOrder);
+        orderrRepository.save(deliveredOrder);
     }
 }

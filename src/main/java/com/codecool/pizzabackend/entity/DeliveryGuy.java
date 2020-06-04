@@ -1,5 +1,6 @@
 package com.codecool.pizzabackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,8 +21,8 @@ import java.util.Set;
 @SuperBuilder
 
 public class DeliveryGuy extends User{
-    @JoinTable(name="delivery_guy_orders_to_deliver")
-    @OneToMany
     @Singular
+    @OneToMany(mappedBy = "deliveryGuy")
+    @JsonIgnore
     private Set<Orderr> assignedOrders;
 }

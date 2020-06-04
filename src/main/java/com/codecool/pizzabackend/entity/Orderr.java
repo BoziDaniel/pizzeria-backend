@@ -39,6 +39,18 @@ public class Orderr {
     @ToString.Exclude
     @ManyToOne
     @JsonIgnore
+    private Cook cook;
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne
+    @JsonIgnore
+    private DeliveryGuy deliveryGuy;
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne
+    @JsonIgnore
     private Customer customer;
 
     public OrderrDTO generateIncomingOrderDTO() {
@@ -60,11 +72,11 @@ public class Orderr {
 
     private PizzaQuantityDTO generateDTOfromPizza(Pizza pizza) {
         PizzaQuantityDTO pizzaDTO = PizzaQuantityDTO.builder()
-                        .id(pizza.getId())
-                        .name(pizza.getName())
-                        .description(pizza.getDescription())
-                        .quantity(orderedPizzas.get(pizza))
-                        .build();
+                .id(pizza.getId())
+                .name(pizza.getName())
+                .description(pizza.getDescription())
+                .quantity(orderedPizzas.get(pizza))
+                .build();
 
 
         return pizzaDTO;

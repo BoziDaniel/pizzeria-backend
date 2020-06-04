@@ -1,5 +1,6 @@
 package com.codecool.pizzabackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,9 +21,9 @@ import java.util.Set;
 @DiscriminatorValue("Cook")
 public class Cook extends User {
 
-    @JoinTable(name="cook_assigned_orders")
-    @OneToMany
     @Singular
+    @OneToMany(mappedBy = "cook")
+    @JsonIgnore
     private Set<Orderr> assignedOrders;
 
 }
