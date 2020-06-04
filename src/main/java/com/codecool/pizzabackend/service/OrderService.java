@@ -72,6 +72,7 @@ public class OrderService {
             case "Customer": {
                 LOGGER.info("Starting to list orders for customer. user id: " + userId);
                 activeOrders = orderrRepository.getOrderrsByOrderStatusNotLikeAndCustomer_IdIs(OrderStatus.DELIVERED, userId);
+                LOGGER.info(String.format("active orders are: %s",activeOrders.toString()));
                 break;
             }
             case "Manager": {

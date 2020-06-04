@@ -56,7 +56,7 @@ public class DbInitializer {
 
         Customer customer = Customer.builder()
                 .username("customer")
-                .role("customer")
+                .role("Customer")
                 .password(passwordEncoder.encode("pass"))
                 .isAccountNonExpired(true)
                 .isAccountNonLocked(true)
@@ -67,7 +67,7 @@ public class DbInitializer {
 
         Customer customer1 = Customer.builder()
                 .username("customer1")
-                .role("customer")
+                .role("Customer")
                 .password(passwordEncoder.encode("pass"))
                 .isAccountNonExpired(true)
                 .isAccountNonLocked(true)
