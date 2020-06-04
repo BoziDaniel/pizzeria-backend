@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pizzas")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class PizzaController {
 
     @Autowired
@@ -22,7 +22,6 @@ public class PizzaController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PizzaController.class);
 
     @GetMapping("/{page}")
-    @PreAuthorize("hasAnyAuthority('customer:read', 'cook:read', 'manager:read', 'deliveryguy:read')")
     public List<Pizza> getPaginatedPizzas(@PathVariable("page") Integer page) {
         LOGGER.info("Get request: /pizzas/" + page + " arrived");
         List<Pizza> pizzas =  pizzaRepository.getPaginatedPizzas(page);
