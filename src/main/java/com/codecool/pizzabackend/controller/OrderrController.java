@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/orders", consumes = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class OrderrController {
 
     @Autowired
@@ -39,6 +39,7 @@ public class OrderrController {
     @GetMapping("/active")
     public List<OrderrDTO> getActiveOrdersForUser(HttpServletRequest request) {
         LOGGER.info("get request: /orders/active/ arrived");
+        LOGGER.info(request.getHeader("Authorization"));
         Long idFromToken = jwtTokenService.getIdFromRequestThroughToken(request);
         LOGGER.info(String.format("id from token: %s", idFromToken));
         List<OrderrDTO> activieOrderDTOs = orderService.listActiveOrdersForUser(idFromToken);

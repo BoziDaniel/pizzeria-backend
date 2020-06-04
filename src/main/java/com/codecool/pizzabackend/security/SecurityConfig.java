@@ -4,6 +4,7 @@ package com.codecool.pizzabackend.security;
 import com.codecool.pizzabackend.jwt.JwtTokenVerifier;
 import com.codecool.pizzabackend.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 import com.codecool.pizzabackend.service.UserService;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         final CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.addAllowedHeader("Authorization");
         // setAllowCredentials(true) is important, otherwise:
         // The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
         configuration.setAllowCredentials(true);
