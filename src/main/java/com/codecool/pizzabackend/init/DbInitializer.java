@@ -5,6 +5,7 @@ import com.codecool.pizzabackend.repository.OrderrRepository;
 import com.codecool.pizzabackend.repository.PizzaRepository;
 import com.codecool.pizzabackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -18,6 +19,13 @@ public class DbInitializer {
     private OrderrRepository orderrRepository;
     @Autowired
     private UserRepository userRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public DbInitializer(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public void intializeDatabase() {
         //PizzaCretion
@@ -53,11 +61,23 @@ public class DbInitializer {
 
         Customer customer = Customer.builder()
                 .username("customer")
+                .role("Customer")
+                .password(passwordEncoder.encode("pass"))
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .isEnabled(true)
                 .build();
         userRepository.save(customer);
 
         Customer customer1 = Customer.builder()
                 .username("customer1")
+                .role("Customer")
+                .password(passwordEncoder.encode("pass"))
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .isEnabled(true)
                 .build();
         userRepository.save(customer1);
 
@@ -141,6 +161,12 @@ public class DbInitializer {
 
         Cook cook = Cook.builder()
                 .username("cook")
+                .password(passwordEncoder.encode("pass"))
+                .role("Cook")
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .isEnabled(true)
                 .assignedOrder(inprogressOrder)
                 .assignedOrder(readyOrder)
                 .assignedOrder(indeliveryOrder)
@@ -150,12 +176,24 @@ public class DbInitializer {
 
         Manager manager = Manager.builder()
                 .username("manager")
+                .role("Manager")
+                .password(passwordEncoder.encode("pass"))
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .isEnabled(true)
                 .build();
         userRepository.save(manager);
         DeliveryGuy deliveryGuy = DeliveryGuy.builder()
                 .username("deliveryGuy")
+                .role("Delivery_Guy")
+                .password(passwordEncoder.encode("pass"))
                 .assignedOrder(indeliveryOrder)
                 .assignedOrder(deliveredOrder)
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .isEnabled(true)
                 .build();
         userRepository.save(deliveryGuy);
         inprogressOrder.setCook(cook);

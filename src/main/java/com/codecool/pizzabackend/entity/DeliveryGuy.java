@@ -20,7 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @SuperBuilder
 
-public class DeliveryGuy extends User {
+public class DeliveryGuy extends User{
     @Singular
     @OneToMany(mappedBy = "deliveryGuy")
     @JsonIgnore

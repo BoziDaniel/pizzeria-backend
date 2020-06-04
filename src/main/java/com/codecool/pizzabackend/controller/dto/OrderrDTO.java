@@ -22,7 +22,6 @@ public class OrderrDTO {
     private Customer customer;
     private Cook cook;
     private DeliveryGuy deliveryGuy;
-
     List<PizzaQuantityDTO> incomingOrderedPizzas;
 
     public OrderrDTO(List<PizzaQuantityDTO> orderedPizzas) {
