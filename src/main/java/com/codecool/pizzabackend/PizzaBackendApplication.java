@@ -29,7 +29,7 @@ public class PizzaBackendApplication {
 
 
     @Bean
-    @Profile("production")
+    @Profile("dev")
     public CommandLineRunner init() {
         return args -> {
             dbInitializer.intializeDatabase();

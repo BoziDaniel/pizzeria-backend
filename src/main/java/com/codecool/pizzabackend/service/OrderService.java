@@ -9,7 +9,6 @@ import com.codecool.pizzabackend.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -47,13 +46,6 @@ public class OrderService {
         LOGGER.info("Incoming order persisted to db. incoming order: " + orderr.toString());
     }
 
-//    public List<OrderrDTO> listAllActiveOrders(){
-//        LOGGER.info("listActiveOrdersForUser started");
-//        List<Orderr> activeOrders = orderrRepository.getIncomingOrdersByOrderStatusNotLike(OrderStatus.DELIVERED);
-//        List<OrderrDTO> activeOrdersDTOs = generateIncomingOrderDTOsFromOrders(activeOrders);
-//        return activeOrdersDTOs;
-//    }
-
     private List<OrderrDTO> generateIncomingOrderDTOsFromOrders(List<Orderr> orders) {
         List<OrderrDTO> orderDTOs = new ArrayList<>();
         for (Orderr order : orders) {
@@ -65,6 +57,7 @@ public class OrderService {
     public List<OrderrDTO> listActiveOrdersForUser(Long userId) {
         LOGGER.info("listActiveOrdersForUser started");
         //TODO: Maybe do the the whole thing in one sql.
+        //TODO: error handling!
         String userRole = userRepository.getUserRoleByUserId(userId);
         LOGGER.info(" User role queired for userid: " + userId + " found role: " + userRole);
         List<Orderr> activeOrders = new ArrayList<>();

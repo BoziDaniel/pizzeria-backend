@@ -17,11 +17,13 @@ public class Pizza {
     @Id
     private Long id;
 
-   @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String name;
 
     private String description;
 
+
+    private int price;
     public Pizza(Long id) {
         this.id = id;
     }

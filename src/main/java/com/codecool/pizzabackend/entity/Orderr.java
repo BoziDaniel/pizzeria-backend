@@ -53,6 +53,7 @@ public class Orderr {
     @JsonIgnore
     private Customer customer;
 
+
     public OrderrDTO generateIncomingOrderDTO() {
         List<PizzaQuantityDTO> pizzaDTOs = new ArrayList<>();
         for (Pizza pizza : orderedPizzas.keySet()) {

@@ -27,12 +27,14 @@ public class DbInitializer {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void intializeDatabase(){
+    public void intializeDatabase() {
+        //PizzaCretion
         for (int i = 1; i < 21; i++) {
             String pizzaName = "pizza_" + i;
             Pizza pizzaa = Pizza.builder()
                     .name(pizzaName)
                     .description("tastes reeel goooood")
+                    .price(3000)
                     .build();
             pizzaRepository.save(pizzaa);
         }
@@ -40,15 +42,18 @@ public class DbInitializer {
         Pizza pizza = Pizza.builder()
                 .name("Testpizza")
                 .description("tastes reeel goooood")
+                .price(6000)
                 .build();
 
         Pizza pizza2 = Pizza.builder()
                 .name("Testpizza2")
                 .description("tastes good ")
+                .price(6000)
                 .build();
         Pizza pizza3 = Pizza.builder()
                 .name("Testpizza3")
                 .description("tastes reeel baaaaad ")
+                .price(8000)
                 .build();
         pizzaRepository.save(pizza);
         pizzaRepository.save(pizza2);
@@ -77,60 +82,60 @@ public class DbInitializer {
         userRepository.save(customer1);
 
         Orderr customer1order = Orderr.builder()
-                .orderedPizzas(new HashMap<Pizza, Integer>(){{
-                    put(pizza,3);
-                    put(pizza2,3);
-                    put(pizza3,3);
+                .orderedPizzas(new HashMap<Pizza, Integer>() {{
+                    put(pizza, 3);
+                    put(pizza2, 3);
+                    put(pizza3, 3);
                 }})
                 .customer(customer)
                 .orderStatus(OrderStatus.IN_PROGRESS)
                 .build();
 
         Orderr orderredOrder = Orderr.builder()
-                .orderedPizzas(new HashMap<Pizza, Integer>(){{
-                    put(pizza,1);
-                    put(pizza2,1);
-                    put(pizza3,3);
+                .orderedPizzas(new HashMap<Pizza, Integer>() {{
+                    put(pizza, 1);
+                    put(pizza2, 1);
+                    put(pizza3, 3);
                 }})
                 .customer(customer)
                 .orderStatus(OrderStatus.ORDERED)
                 .build();
 
         Orderr inprogressOrder = Orderr.builder()
-                .orderedPizzas(new HashMap<Pizza, Integer>(){{
-                    put(pizza,1);
-                    put(pizza2,2);
-                    put(pizza3,3);
+                .orderedPizzas(new HashMap<Pizza, Integer>() {{
+                    put(pizza, 1);
+                    put(pizza2, 2);
+                    put(pizza3, 3);
                 }})
                 .customer(customer)
                 .orderStatus(OrderStatus.IN_PROGRESS)
                 .build();
 
         Orderr readyOrder = Orderr.builder()
-                .orderedPizzas(new HashMap<Pizza, Integer>(){{
-                    put(pizza,1);
-                    put(pizza2,3);
-                    put(pizza3,3);
+                .orderedPizzas(new HashMap<Pizza, Integer>() {{
+                    put(pizza, 1);
+                    put(pizza2, 3);
+                    put(pizza3, 3);
                 }})
                 .customer(customer)
                 .orderStatus(OrderStatus.READY)
                 .build();
 
         Orderr indeliveryOrder = Orderr.builder()
-                .orderedPizzas(new HashMap<Pizza, Integer>(){{
-                    put(pizza,1);
-                    put(pizza2,4);
-                    put(pizza3,3);
+                .orderedPizzas(new HashMap<Pizza, Integer>() {{
+                    put(pizza, 1);
+                    put(pizza2, 4);
+                    put(pizza3, 3);
                 }})
                 .customer(customer)
                 .orderStatus(OrderStatus.IN_DELIVERY)
                 .build();
 
         Orderr deliveredOrder = Orderr.builder()
-                .orderedPizzas(new HashMap<Pizza, Integer>(){{
-                    put(pizza,1);
-                    put(pizza2,5);
-                    put(pizza3,3);
+                .orderedPizzas(new HashMap<Pizza, Integer>() {{
+                    put(pizza, 1);
+                    put(pizza2, 5);
+                    put(pizza3, 3);
                 }})
                 .customer(customer)
                 .orderStatus(OrderStatus.DELIVERED)
@@ -141,13 +146,16 @@ public class DbInitializer {
         orderrRepository.save(readyOrder);
         orderrRepository.save(indeliveryOrder);
         orderrRepository.save(deliveredOrder);
-        customer.setCustomerOrders(new HashSet<>(){{
+        customer.setCustomerOrders(new HashSet<>() {{
             add(orderredOrder);
             add(inprogressOrder);
             add(readyOrder);
             add(indeliveryOrder);
-            add(deliveredOrder); }});
-        customer1.setCustomerOrders(new HashSet<>(){{add(customer1order);}});
+            add(deliveredOrder);
+        }});
+        customer1.setCustomerOrders(new HashSet<>() {{
+            add(customer1order);
+        }});
         userRepository.save(customer1);
         userRepository.save(customer);
 
@@ -165,6 +173,7 @@ public class DbInitializer {
                 .assignedOrder(deliveredOrder)
                 .build();
         userRepository.save(cook);
+
         Manager manager = Manager.builder()
                 .username("manager")
                 .role("Manager")
