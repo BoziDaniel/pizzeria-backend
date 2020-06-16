@@ -1,5 +1,6 @@
 package com.codecool.pizzabackend.security;
 
+import com.codecool.pizzabackend.entity.Cook;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -34,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers(HttpMethod.GET, "/pizzas/**").permitAll()// allowed by anyone
+                .antMatchers(HttpMethod.GET, "/pizzas/**").hasRole("CUSTOMER")// allowed by anyone
                 .antMatchers(HttpMethod.GET, "/order/active/**").authenticated()
 //                .antMatchers(HttpMethod.POST, "/order/")
                 .anyRequest().denyAll()
