@@ -52,12 +52,18 @@ public class DbInitializer {
                 .build();
         Pizza pizza3 = Pizza.builder()
                 .name("Testpizza3")
-                .description("tastes reeel baaaaad ")
+                .description("great pizza ")
                 .price(8000)
+                .build();
+        Pizza pizza4 = Pizza.builder()
+                .name("4 seasons")
+                .description("Tasty")
+                .price(47000)
                 .build();
         pizzaRepository.save(pizza);
         pizzaRepository.save(pizza2);
         pizzaRepository.save(pizza3);
+        pizzaRepository.save(pizza4);
 
         Customer customer = Customer.builder()
                 .username("customer")
@@ -96,6 +102,7 @@ public class DbInitializer {
                     put(pizza, 1);
                     put(pizza2, 1);
                     put(pizza3, 3);
+                    put(pizza4, 20);
                 }})
                 .customer(customer)
                 .orderStatus(OrderStatus.ORDERED)

@@ -19,11 +19,7 @@ import java.util.List;
 public class OrderrController {
 
     @Autowired
-    private OrderrRepository orderrRepository;
-    @Autowired
     private OrderService orderService;
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private JwtTokenService jwtTokenService;
