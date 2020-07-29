@@ -13,4 +13,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     String getUserRoleByUserId(Long userId);
 
     Optional<User> getAppUserByUsername(String username);
+    Optional<User> getUserByUsername(String username);
 }

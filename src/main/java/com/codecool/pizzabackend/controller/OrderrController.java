@@ -1,17 +1,17 @@
 package com.codecool.pizzabackend.controller;
 
 import com.codecool.pizzabackend.controller.dto.OrderrDTO;
-import com.codecool.pizzabackend.entity.Orderr;
-import com.codecool.pizzabackend.repository.OrderrRepository;
+import com.codecool.pizzabackend.entity.User;
 import com.codecool.pizzabackend.repository.UserRepository;
+import com.codecool.pizzabackend.security.JwtTokenServices;
 import com.codecool.pizzabackend.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -19,29 +19,35 @@ import java.util.List;
 public class OrderrController {
 
     @Autowired
-    private OrderrRepository orderrRepository;
-    @Autowired
     private OrderService orderService;
 
     @Autowired
+    private JwtTokenServices jwtTokenServices;
+    @Autowired
     private UserRepository userRepository;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderrController.class);
 
-
-    @GetMapping("/active/{userId}")
-    public List<OrderrDTO> getActiveOrdersForUser(@PathVariable("userId") Long userId) {
-        LOGGER.info("get request: /orders/active/" + userId + " arrived");
-        List<OrderrDTO> activieOrderDTOs = orderService.listActiveOrdersForUser(userId);
-        LOGGER.info(" Get request: /orders/active/" + userId + " processed. \n Return value will be: " + activieOrderDTOs.toString());
+    @GetMapping("/active")
+    public List<OrderrDTO> getActiveOrdersForUser(HttpServletRequest request) {
+        LOGGER.info("GET request /orders/active/ arrived");
+        String username = jwtTokenServices.getTokenFromRequest(request);
+        LOGGER.info(String.format("username from token: %s", username));
+        User user = userRepository.getAppUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
+        List<OrderrDTO> activieOrderDTOs = orderService.listActiveOrdersForUser(user.getId());
+        LOGGER.info(" Get request: /orders/active/ processed. Id was: " + user.getId() + " \n Return value will be: " + activieOrderDTOs.toString());
         return activieOrderDTOs;
     }
 
-    @PostMapping("/{userId}")
-    public void createNewOrder(@PathVariable("userId") Long userId, @RequestBody OrderrDTO orderrDTO) {
-        LOGGER.info("post request: /orders/" + userId + " arrived. payload: " + orderrDTO.toString());
-        orderService.persistIncomingOrder(userId, orderrDTO);
-        LOGGER.info("post request: /orders/" + userId + " processed.");
+    @PostMapping("/add-new")
+    public void createNewOrder(@RequestBody OrderrDTO orderrDTO, HttpServletRequest request) {
+        LOGGER.info("post request: /orders/add-new arrived. payload: " + orderrDTO.toString());
+        String username = jwtTokenServices.getTokenFromRequest(request);
+        LOGGER.info(String.format("username from token: %s", username));
+        User user = userRepository.getAppUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
+        orderService.persistIncomingOrder(user.getId(), orderrDTO);
+        LOGGER.info("post request: /orders/add-new processed. Id was: " + user.getId());
     }
 
 

@@ -39,12 +39,6 @@ public class Orderr {
     @ToString.Exclude
     @ManyToOne
     @JsonIgnore
-    private Customer customer;
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @ManyToOne
-    @JsonIgnore
     private Cook cook;
 
     @EqualsAndHashCode.Exclude
@@ -52,6 +46,13 @@ public class Orderr {
     @ManyToOne
     @JsonIgnore
     private DeliveryGuy deliveryGuy;
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne
+    @JsonIgnore
+    private Customer customer;
+
 
     public OrderrDTO generateIncomingOrderDTO() {
         List<PizzaQuantityDTO> pizzaDTOs = new ArrayList<>();

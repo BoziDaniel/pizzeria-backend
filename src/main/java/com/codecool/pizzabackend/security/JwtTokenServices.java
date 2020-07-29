@@ -9,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
@@ -20,9 +19,8 @@ import java.util.List;
 @Component
 @Slf4j
 public class JwtTokenServices {
-
-    @Value("${security.jwt.token.secret-key:secret}")
-    private String secretKey = "secret";
+    //    @Value("${security.jwt.token.secret-key:secret}")
+    private String secretKey = "securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecurevalami";
 
     @Value("${security.jwt.token.expire-length:3600000}")
     private long validityInMilliseconds = 36000000; // 10h
@@ -50,7 +48,7 @@ public class JwtTokenServices {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
-    String getTokenFromRequest(HttpServletRequest req) {
+    public String getTokenFromRequest(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7, bearerToken.length());
@@ -75,7 +73,6 @@ public class JwtTokenServices {
      * Note that it does not make a DB call to be super fast!
      * This could result in returning false data (e.g. the user was deleted, but their token has not expired yet)
      * To prevent errors because of this make sure to check the user in the database for more important calls!
-     * @return
      */
     Authentication parseUserFromTokenInfo(String token) throws UsernameNotFoundException {
         Claims body = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
@@ -86,5 +83,11 @@ public class JwtTokenServices {
             authorities.add(new SimpleGrantedAuthority(role));
         }
         return new UsernamePasswordAuthenticationToken(username, "", authorities);
+    }
+
+    public String getUsernameFromJwtToken(String token) {
+        Claims body = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        String username = body.getSubject();
+        return username;
     }
 }
