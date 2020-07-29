@@ -15,14 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/orders", consumes = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping(value = "/orders")
 public class OrderrController {
 
     @Autowired
     private OrderrRepository orderrRepository;
     @Autowired
     private OrderService orderService;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -43,4 +43,6 @@ public class OrderrController {
         orderService.persistIncomingOrder(userId, orderrDTO);
         LOGGER.info("post request: /orders/" + userId + " processed.");
     }
+
+
 }
