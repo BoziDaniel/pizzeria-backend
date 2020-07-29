@@ -27,10 +27,12 @@ public class OrderrController {
     private UserRepository userRepository;
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderrController.class);
 
+    //refaktor it, put these into a service class
     @GetMapping("/active")
     public List<OrderrDTO> getActiveOrdersForUser(HttpServletRequest request) {
         LOGGER.info("GET request /orders/active/ arrived");
-        String username = jwtTokenServices.getTokenFromRequest(request);
+        String token = jwtTokenServices.getTokenFromRequest(request);
+        String username = jwtTokenServices.getUsernameFromJwtToken(token);
         LOGGER.info(String.format("username from token: %s", username));
         User user = userRepository.getAppUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
@@ -42,7 +44,8 @@ public class OrderrController {
     @PostMapping("/add-new")
     public void createNewOrder(@RequestBody OrderrDTO orderrDTO, HttpServletRequest request) {
         LOGGER.info("post request: /orders/add-new arrived. payload: " + orderrDTO.toString());
-        String username = jwtTokenServices.getTokenFromRequest(request);
+        String token = jwtTokenServices.getTokenFromRequest(request);
+        String username = jwtTokenServices.getUsernameFromJwtToken(token);
         LOGGER.info(String.format("username from token: %s", username));
         User user = userRepository.getAppUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));

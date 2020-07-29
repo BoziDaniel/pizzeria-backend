@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/pizzas/**").hasRole("MANAGER")// allowed by anyone
-                .antMatchers(HttpMethod.GET, "/orders/active/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/orders/active/**").hasRole("MANAGER")
 //                .antMatchers(HttpMethod.POST, "/order/")
                 .anyRequest().denyAll()
                 .and()

@@ -9,6 +9,7 @@ import com.codecool.pizzabackend.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -58,27 +59,28 @@ public class OrderService {
         LOGGER.info("listActiveOrdersForUser started");
         //TODO: Maybe do the the whole thing in one sql.
         //TODO: error handling!
-        String userRole = userRepository.getUserRoleByUserId(userId);
+        User user = userRepository.getUserById(userId);
+        String userRole = user.getRoles().stream().findFirst().get();
         LOGGER.info(" User role queired for userid: " + userId + " found role: " + userRole);
         List<Orderr> activeOrders = new ArrayList<>();
         switch (userRole) {
-            case "Customer": {
+            case "ROLE_CUSTOMER": {
                 LOGGER.info("Starting to list orders for customer. user id: " + userId);
                 activeOrders = orderrRepository.getOrderrsByOrderStatusNotLikeAndCustomer_IdIs(OrderStatus.DELIVERED, userId);
                 LOGGER.info(String.format("active orders are: %s",activeOrders.toString()));
                 break;
             }
-            case "Manager": {
+            case "ROLE_MANAGER": {
                 LOGGER.info("Starting to list orders for manager. user id: " + userId);
                 activeOrders = orderrRepository.getOrderrsByOrderStatusNotLike(OrderStatus.DELIVERED);
                 break;
             }
-            case "Cook": {
+            case "ROLE_COOK": {
                 LOGGER.info("Starting to list orders for cook. user id: " + userId);
                 activeOrders = orderrRepository.getCookActiveAssignedOrders(userId);
                 break;
             }
-            case "DeliveryGuy": {
+            case "ROLE_DELIVERYGUY": {
                 LOGGER.info("Starting to list orders for deliveryGuy. user id: " + userId);
                 activeOrders = orderrRepository.getDeliveryGuyActiveAssignedOrders(userId);
                 break;
