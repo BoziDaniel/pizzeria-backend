@@ -18,11 +18,11 @@ public class PizzaController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PizzaController.class);
 
-    @GetMapping("/{page}")
-    public List<Pizza> getPaginatedPizzas(@PathVariable("page") Integer page) {
-        LOGGER.info("Get request: /pizzas/" + page + " arrived");
+    @GetMapping()
+    public List<Pizza> getPaginatedPizzas(@RequestParam  Integer page) {
+        LOGGER.info("Get request: /pizzas?page=" + page + " arrived");
         List<Pizza> pizzas = pizzaRepository.getPaginatedPizzas(page);
-        LOGGER.info(" Get request: /pizzas/" + page + " processed. \n Return value will be: " + pizzas.toString());
+        LOGGER.info(" Get request: /pizzas?page=" + page + " processed. \n Return value will be: " + pizzas.toString());
         return pizzas;
     }
 }
