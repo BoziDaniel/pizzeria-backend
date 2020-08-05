@@ -18,6 +18,14 @@ public class PizzaController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PizzaController.class);
 
+    @GetMapping("/numberOfPizzas")
+    public Integer getNumberOfPizzas(){
+        LOGGER.info("Get request: /pizzas/numberOfPizzas arrived");
+        Integer numberOfPizzas = pizzaRepository.getNumberOfPizzas();
+        LOGGER.info(" Get request: /pizzas/numberOfPizzas processed. \n Return value will be: " + numberOfPizzas);
+        return numberOfPizzas;
+    }
+
     @GetMapping()
     public List<Pizza> getPaginatedPizzas(@RequestParam  Integer page) {
         LOGGER.info("Get request: /pizzas?page=" + page + " arrived");
@@ -25,4 +33,6 @@ public class PizzaController {
         LOGGER.info(" Get request: /pizzas?page=" + page + " processed. \n Return value will be: " + pizzas.toString());
         return pizzas;
     }
+
+
 }
