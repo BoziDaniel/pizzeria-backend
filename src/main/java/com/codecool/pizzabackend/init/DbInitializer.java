@@ -34,18 +34,18 @@ public class DbInitializer {
         }
 
         Pizza pizza = Pizza.builder()
-                .name("Testpizza")
+                .name("Salami pizza")
                 .description("tastes reeel goooood")
                 .price(6000)
                 .build();
 
         Pizza pizza2 = Pizza.builder()
-                .name("Testpizza2")
+                .name("Meatlover pizza")
                 .description("tastes good ")
                 .price(6000)
                 .build();
         Pizza pizza3 = Pizza.builder()
-                .name("Testpizza3")
+                .name("Capricosa")
                 .description("great pizza ")
                 .price(8000)
                 .build();
@@ -54,11 +54,22 @@ public class DbInitializer {
                 .description("Tasty")
                 .price(47000)
                 .build();
+        Pizza pizza5 = Pizza.builder()
+                .name("Hawai pizza")
+                .description("Tasty")
+                .price(47000)
+                .build();
+        Pizza pizza6 = Pizza.builder()
+                .name("Songoku")
+                .description("Tasty")
+                .price(47000)
+                .build();
         pizzaRepository.save(pizza);
         pizzaRepository.save(pizza2);
         pizzaRepository.save(pizza3);
         pizzaRepository.save(pizza4);
-
+        pizzaRepository.save(pizza5);
+        pizzaRepository.save(pizza6);
         Customer customer = Customer.builder()
                 .username("customer")
                 .password(passwordEncoder.encode("pass"))
@@ -89,6 +100,8 @@ public class DbInitializer {
                     put(pizza2, 1);
                     put(pizza3, 3);
                     put(pizza4, 20);
+                    put(pizza5, 8);
+                    put(pizza6, 11);
                 }})
                 .customer(customer)
                 .orderStatus(OrderStatus.ORDERED)
