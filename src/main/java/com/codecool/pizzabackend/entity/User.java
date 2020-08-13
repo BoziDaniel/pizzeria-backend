@@ -1,5 +1,6 @@
 package com.codecool.pizzabackend.entity;
 
+import com.codecool.pizzabackend.controller.dto.UserDTO;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -25,4 +26,8 @@ public abstract class User {
     @ElementCollection
     @Singular
     private Set<String> roles;
+
+    public UserDTO createDTO(){
+        return new UserDTO(id,username);
+    }
 }

@@ -176,6 +176,13 @@ public class DbInitializer {
                 .build();
         userRepository.save(cook);
 
+        Cook cook2 = Cook.builder()
+                .username("cook2")
+                .password(passwordEncoder.encode("pass"))
+                .role("ROLE_COOK")
+                .build();
+        userRepository.save(cook2);
+
         Manager manager = Manager.builder()
                 .username("manager")
                 .role("ROLE_MANAGER")
