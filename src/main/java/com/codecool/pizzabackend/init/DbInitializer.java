@@ -27,7 +27,9 @@ public class DbInitializer {
             String pizzaName = "pizza_" + i;
             Pizza pizzaa = Pizza.builder()
                     .name(pizzaName)
-                    .description("tastes reeel goooood")
+                    .description("Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam," +
+                            " eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+                    )
                     .price(3000)
                     .build();
             pizzaRepository.save(pizzaa);
