@@ -31,6 +31,16 @@ public interface OrderrRepository extends JpaRepository<Orderr, Long> {
             "        END", nativeQuery = true)
     Boolean isOrderOwnedByCook(Long id, Long cookId);
 
+    @Query(value = "SELECT\n" +
+            "    CASE WHEN EXISTS\n" +
+            "        (SELECT  *\n" +
+            "         FROM ORDERR\n" +
+            "         WHERE ID=?1 and DELIVERY_GUY_ID=?2)\n" +
+            "             THEN TRUE\n" +
+            "         ELSE FALSE\n" +
+            "        END", nativeQuery = true)
+    Boolean isOrderOwnedByDeliveryGuy(Long id, Long deliveryGuyId);
+
 
 
 }

@@ -92,9 +92,16 @@ public class OrderService {
     }
 
     private boolean isCookOwnsOrder(Long orderId, Long cookId){
-        LOGGER.info(String.format("Started to check if order with id: %s is owned by user: %s", orderId,cookId));
+        LOGGER.info(String.format("Started to check if order with id: %s is owned by cook with id: %s", orderId,cookId));
         boolean result = orderrRepository.isOrderOwnedByCook(orderId,cookId);
-        LOGGER.info(String.format("Finished to check if order with id: %s is owned by user: %s result is: %s", orderId,cookId,result));
+        LOGGER.info(String.format("Finished to check if order with id: %s is owned by cook with id: %s result is: %s", orderId,cookId,result));
+        return result;
+    }
+
+    private boolean isDeliveryGuyOwnsOrder(Long orderId, Long deliveryGuyId){
+        LOGGER.info(String.format("Started to check if order with id: %s is owned by delivery guy with id: %s", orderId,deliveryGuyId));
+        boolean result = orderrRepository.isOrderOwnedByDeliveryGuy(orderId,deliveryGuyId);
+        LOGGER.info(String.format("Finished to check if order with id: %s is owned by delivery guy with id: %s result is: %s", orderId,deliveryGuyId,result));
         return result;
     }
 
@@ -107,6 +114,17 @@ public class OrderService {
             orderrRepository.save(orderr);
         }
         LOGGER.info(String.format("Finished the process of updating order status to READY order id: %s is  cook id: %s", orderId,cookId));
+    }
+
+    public void setOrderStatusToDelivered(Long orderId, Long deliveryguyId) throws OrederrNotFoundException {
+        LOGGER.info(String.format("Started the process of updating order status to DELIVERED order id: %s is deliveryguy id: %s", orderId,deliveryguyId));
+        if(isDeliveryGuyOwnsOrder(orderId, deliveryguyId)){
+            Orderr orderr = orderrRepository.findById(orderId)
+                    .orElseThrow(() -> new OrederrNotFoundException(String.format("Order with id: %s not found",orderId)));
+            orderr.setOrderStatus(OrderStatus.DELIVERED);
+            orderrRepository.save(orderr);
+        }
+        LOGGER.info(String.format("Finished the process of updating order status to DELIVERED order id: %s is  deliveryguy id: %s", orderId,deliveryguyId));
     }
 }
 

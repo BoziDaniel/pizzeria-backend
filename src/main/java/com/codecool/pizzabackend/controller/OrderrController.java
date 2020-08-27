@@ -66,7 +66,14 @@ public class OrderrController {
         LOGGER.info("post request: /orders/set-order-ready/"+ id + " processed");
     }
     @PutMapping("/set-order-delivered/{orderId}")
-    public void setOrderStatusFromInDeliveryToDelivered(@ PathVariable("orderId") Long id, HttpServletRequest request){
+    public void setOrderStatusFromInDeliveryToDelivered(@ PathVariable("orderId") Long id, HttpServletRequest request) throws OrederrNotFoundException {
+        LOGGER.info("post request: /orders/set-order-delivered/"+ id + " arrived");
+        String token = jwtTokenServices.getTokenFromRequest(request);
+        String username = jwtTokenServices.getUsernameFromJwtToken(token);
+        LOGGER.info(String.format("username from token: %s", username));
+        User user = userRepository.getAppUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
+        orderService.setOrderStatusToDelivered(id, user.getId());
         LOGGER.info("post request: /orders/set-order-delivered/"+ id + " arrived");
     }
 }
