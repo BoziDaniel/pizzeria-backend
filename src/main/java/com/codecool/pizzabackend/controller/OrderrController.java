@@ -5,6 +5,7 @@ import com.codecool.pizzabackend.entity.User;
 import com.codecool.pizzabackend.repository.UserRepository;
 import com.codecool.pizzabackend.security.JwtTokenServices;
 import com.codecool.pizzabackend.service.OrderService;
+import com.codecool.pizzabackend.service.OrederrNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +54,16 @@ public class OrderrController {
         LOGGER.info("post request: /orders/add-new processed. Id was: " + user.getId());
     }
     @PutMapping("/set-order-ready/{orderId}")
-    public void setOrderStatusFromInProgressToReady(@ PathVariable("orderId") Long id, HttpServletRequest request){
+    public void setOrderStatusFromInProgressToReady(@ PathVariable("orderId") Long id, HttpServletRequest request) throws OrederrNotFoundException {
         LOGGER.info("post request: /orders/set-order-ready/"+ id + " arrived");
+        String token = jwtTokenServices.getTokenFromRequest(request);
+        String username = jwtTokenServices.getUsernameFromJwtToken(token);
+        LOGGER.info(String.format("username from token: %s", username));
+        User user = userRepository.getAppUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
+        orderService.setOrderStatusToReady(id, user.getId());
+
+        LOGGER.info("post request: /orders/set-order-ready/"+ id + " processed");
     }
     @PutMapping("/set-order-delivered/{orderId}")
     public void setOrderStatusFromInDeliveryToDelivered(@ PathVariable("orderId") Long id, HttpServletRequest request){

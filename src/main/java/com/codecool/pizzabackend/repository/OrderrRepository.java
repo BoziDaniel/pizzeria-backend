@@ -20,4 +20,17 @@ public interface OrderrRepository extends JpaRepository<Orderr, Long> {
     @Query(value = "SELECT * FROM ORDERR\n" +
             "WHERE DELIVERY_GUY_ID  = ?1 AND ORDER_STATUS = 'IN_DELIVERY'", nativeQuery = true)
     List<Orderr> getDeliveryGuyActiveAssignedOrders(Long id);
+
+    @Query(value = "SELECT\n" +
+            "    CASE WHEN EXISTS\n" +
+            "        (SELECT  *\n" +
+            "         FROM ORDERR\n" +
+            "         WHERE ID=?1 and COOK_ID=?2)\n" +
+            "             THEN TRUE\n" +
+            "         ELSE FALSE\n" +
+            "        END", nativeQuery = true)
+    Boolean isOrderOwnedByCook(Long id, Long cookId);
+
+
+
 }
