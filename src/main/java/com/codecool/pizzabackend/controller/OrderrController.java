@@ -52,6 +52,12 @@ public class OrderrController {
         orderService.persistIncomingOrder(user.getId(), orderrDTO);
         LOGGER.info("post request: /orders/add-new processed. Id was: " + user.getId());
     }
-
-
+    @PutMapping("/set-order-ready/{orderId}")
+    public void setOrderStatusFromInProgressToReady(@ PathVariable("orderId") Long id, HttpServletRequest request){
+        LOGGER.info("post request: /orders/set-order-ready/"+ id + " arrived");
+    }
+    @PutMapping("/set-order-delivered/{orderId}")
+    public void setOrderStatusFromInDeliveryToDelivered(@ PathVariable("orderId") Long id, HttpServletRequest request){
+        LOGGER.info("post request: /orders/set-order-delivered/"+ id + " arrived");
+    }
 }
