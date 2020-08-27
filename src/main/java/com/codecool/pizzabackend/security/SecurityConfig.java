@@ -63,6 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/cook/all").hasRole("MANAGER")
                 .antMatchers(HttpMethod.GET, "/deliveryguy/all").hasRole("MANAGER")
                 .antMatchers(HttpMethod.POST, "/orders/add-new").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.PUT, "/orders/set-order-ready/**").hasRole("COOK")
+                .antMatchers(HttpMethod.PUT, "/orders/set-order-delivered/**").hasRole("DELIVERYGUY")
                 .anyRequest().denyAll()
                 .and()
                 .addFilterBefore(new JwtTokenFilter(jwtTokenServices), UsernamePasswordAuthenticationFilter.class);
