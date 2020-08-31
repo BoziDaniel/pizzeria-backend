@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/deliveryguy")
+@RequestMapping(value = "/deliveryGuy")
 public class DeliveryGuyController {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderrController.class);
     @Autowired
@@ -25,13 +25,13 @@ public class DeliveryGuyController {
 
     @GetMapping("/all")
     public List<UserDTO> getAllDeliveryGuys() {
-        LOGGER.info("Get request: /deliveryguy/all arrived");
+        LOGGER.info("Get request: /deliveryGuy/all arrived");
         //Todo: use sevice layer at least, but best to use db query instead filter
-        List<UserDTO> deliveryguys = userRepository.findAll().stream()
+        List<UserDTO> deliveryGuys = userRepository.findAll().stream()
                 .filter(user -> user.getRoles().contains("ROLE_DELIVERYGUY"))
-                .map(deliveryguy -> deliveryguy.createDTO())
+                .map(deliveryGuy -> deliveryGuy.createDTO())
                 .collect(Collectors.toList());
-        LOGGER.info(" Get request: /deliveryguy/all processed. Return value will be: " + deliveryguys.toString());
-        return deliveryguys;
+        LOGGER.info(" Get request: /deliveryGuy/all processed. Return value will be: " + deliveryGuys.toString());
+        return deliveryGuys;
     }
 }
