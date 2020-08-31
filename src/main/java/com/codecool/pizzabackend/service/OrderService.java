@@ -136,6 +136,16 @@ public class OrderService {
         orderrRepository.save(orderr);
         LOGGER.info(String.format("Finished the process of updating order with id %s with cook with id %s ", orderId, cookId));
     }
+
+    public void assignDeliveriGuyToOrder(Long orderId ,Long deliveryGuyId) throws OrederrNotFoundException {
+        LOGGER.info(String.format("Started the process of updating order with id %s with delivery guy with id %s ", orderId, deliveryGuyId));
+        Orderr orderr = orderrRepository.findById(orderId)
+                .orElseThrow(() -> new OrederrNotFoundException(String.format("Order with id: %s not found",orderId)));
+        DeliveryGuy deliveryGuy = (DeliveryGuy) userRepository.findById(deliveryGuyId).orElseThrow(() -> new UsernameNotFoundException("User with id : " + deliveryGuyId + " not found"));
+        orderr.setDeliveryGuy(deliveryGuy);
+        orderrRepository.save(orderr);
+        LOGGER.info(String.format("Finished the process of updating order with id %s with delivery guy with id %s ", orderId, deliveryGuyId));
+    }
 }
 
 

@@ -83,4 +83,11 @@ public class OrderrController {
         orderService.assignCookToOrder(id,cookId);
         LOGGER.info(String.format("put request: /orders/assignCook/%s processed. cookId is: %s", id, cookId));
     }
+
+    @PutMapping("assignDeliveryGuy/{orderId}")
+    public void assignDeliceryGuyToOrder(@PathVariable("orderId") Long id, @RequestBody Long deliveryGuyId) throws OrederrNotFoundException {
+        LOGGER.info(String.format("put request: /orders/assignDeliveryguy/%s arrived. deliveryGuyId is: %s", id, deliveryGuyId));
+        orderService.assignDeliveriGuyToOrder(id,deliveryGuyId);
+        LOGGER.info(String.format("put request: /orders/assignDeliveryguy/%s processed. deliveryGuyId is: %s", id, deliveryGuyId));
+    }
 }
