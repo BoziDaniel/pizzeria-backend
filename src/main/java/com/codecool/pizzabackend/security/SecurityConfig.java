@@ -62,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/orders/active/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/cook/all").hasRole("MANAGER")
                 .antMatchers(HttpMethod.GET, "/deliveryguy/all").hasRole("MANAGER")
+                .antMatchers(HttpMethod.PUT, "/orders/assignCook/**").hasRole("MANAGER")
                 .antMatchers(HttpMethod.POST, "/orders/add-new").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.PUT, "/orders/set-order-ready/**").hasRole("COOK")
                 .antMatchers(HttpMethod.PUT, "/orders/set-order-delivered/**").hasRole("DELIVERYGUY")

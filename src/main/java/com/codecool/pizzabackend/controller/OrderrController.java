@@ -54,8 +54,8 @@ public class OrderrController {
         LOGGER.info("post request: /orders/add-new processed. Id was: " + user.getId());
     }
     @PutMapping("/set-order-ready/{orderId}")
-    public void setOrderStatusFromInProgressToReady(@ PathVariable("orderId") Long id, HttpServletRequest request) throws OrederrNotFoundException {
-        LOGGER.info("post request: /orders/set-order-ready/"+ id + " arrived");
+    public void setOrderStatusFromInProgressToReady(@PathVariable("orderId") Long id, HttpServletRequest request) throws OrederrNotFoundException {
+        LOGGER.info("put request: /orders/set-order-ready/"+ id + " arrived");
         String token = jwtTokenServices.getTokenFromRequest(request);
         String username = jwtTokenServices.getUsernameFromJwtToken(token);
         LOGGER.info(String.format("username from token: %s", username));
@@ -63,17 +63,24 @@ public class OrderrController {
                 .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
         orderService.setOrderStatusToReady(id, user.getId());
 
-        LOGGER.info("post request: /orders/set-order-ready/"+ id + " processed");
+        LOGGER.info("put request: /orders/set-order-ready/"+ id + " processed");
     }
     @PutMapping("/set-order-delivered/{orderId}")
-    public void setOrderStatusFromInDeliveryToDelivered(@ PathVariable("orderId") Long id, HttpServletRequest request) throws OrederrNotFoundException {
-        LOGGER.info("post request: /orders/set-order-delivered/"+ id + " arrived");
+    public void setOrderStatusFromInDeliveryToDelivered(@PathVariable("orderId") Long id, HttpServletRequest request) throws OrederrNotFoundException {
+        LOGGER.info("put request: /orders/set-order-delivered/"+ id + " arrived");
         String token = jwtTokenServices.getTokenFromRequest(request);
         String username = jwtTokenServices.getUsernameFromJwtToken(token);
         LOGGER.info(String.format("username from token: %s", username));
         User user = userRepository.getAppUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
         orderService.setOrderStatusToDelivered(id, user.getId());
-        LOGGER.info("post request: /orders/set-order-delivered/"+ id + " arrived");
+        LOGGER.info("put request: /orders/set-order-delivered/"+ id + " arrived");
+    }
+
+    @PutMapping("assignCook/{orderId}")
+    public void assignCookToOrder(@PathVariable("orderId") Long id, @RequestBody Long cookId) throws OrederrNotFoundException {
+        LOGGER.info(String.format("put request: /orders/assignCook/%s arrived. cookId is: %s", id, cookId));
+        orderService.assignCookToOrder(id,cookId);
+        LOGGER.info(String.format("put request: /orders/assignCook/%s processed. cookId is: %s", id, cookId));
     }
 }

@@ -126,6 +126,16 @@ public class OrderService {
         }
         LOGGER.info(String.format("Finished the process of updating order status to DELIVERED order id: %s is  deliveryguy id: %s", orderId,deliveryguyId));
     }
+
+    public void assignCookToOrder(Long orderId ,Long cookId) throws OrederrNotFoundException {
+        LOGGER.info(String.format("Started the process of updating order with id %s with cook with id %s ", orderId, cookId));
+        Orderr orderr = orderrRepository.findById(orderId)
+                .orElseThrow(() -> new OrederrNotFoundException(String.format("Order with id: %s not found",orderId)));
+        Cook cook = (Cook)userRepository.findById(cookId).orElseThrow(() -> new UsernameNotFoundException("User with id : " + cookId + " not found"));
+        orderr.setCook(cook);
+        orderrRepository.save(orderr);
+        LOGGER.info(String.format("Finished the process of updating order with id %s with cook with id %s ", orderId, cookId));
+    }
 }
 
 
