@@ -1,6 +1,7 @@
 package com.codecool.pizzabackend.init;
 
 import com.codecool.pizzabackend.entity.*;
+import com.codecool.pizzabackend.repository.AddressRepository;
 import com.codecool.pizzabackend.repository.OrderrRepository;
 import com.codecool.pizzabackend.repository.PizzaRepository;
 import com.codecool.pizzabackend.repository.UserRepository;
@@ -20,6 +21,8 @@ public class DbInitializer {
     private OrderrRepository orderrRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AddressRepository addressRepository;
     private final PasswordEncoder passwordEncoder= PasswordEncoderFactories.createDelegatingPasswordEncoder();
     public void intializeDatabase() {
         //PizzaCretion
@@ -72,6 +75,7 @@ public class DbInitializer {
         pizzaRepository.save(pizza4);
         pizzaRepository.save(pizza5);
         pizzaRepository.save(pizza6);
+
         Customer customer = Customer.builder()
                 .username("customer")
                 .password(passwordEncoder.encode("pass"))
@@ -85,7 +89,12 @@ public class DbInitializer {
                 .role("ROLE_CUSTOMER")
                 .build();
         userRepository.save(customer1);
-
+        Address address = Address.builder()
+                .city("Budapest")
+                .postalCode("1065")
+                .street("Nagymező street")
+                .streetNumber("44").build();
+        addressRepository.save(address);
         Orderr customer1order = Orderr.builder()
                 .orderedPizzas(new HashMap<Pizza, Integer>() {{
                     put(pizza, 3);
@@ -93,6 +102,7 @@ public class DbInitializer {
                     put(pizza3, 3);
                 }})
                 .customer(customer)
+                .address(address)
                 .orderStatus(OrderStatus.IN_PROGRESS)
                 .build();
 
@@ -106,6 +116,7 @@ public class DbInitializer {
                     put(pizza6, 11);
                 }})
                 .customer(customer)
+                .address(address)
                 .orderStatus(OrderStatus.ORDERED)
                 .build();
 
@@ -116,6 +127,7 @@ public class DbInitializer {
                     put(pizza3, 3);
                 }})
                 .customer(customer)
+                .address(address)
                 .orderStatus(OrderStatus.IN_PROGRESS)
                 .build();
 
@@ -126,6 +138,7 @@ public class DbInitializer {
                     put(pizza3, 3);
                 }})
                 .customer(customer)
+                .address(address)
                 .orderStatus(OrderStatus.READY)
                 .build();
 
@@ -136,6 +149,7 @@ public class DbInitializer {
                     put(pizza3, 3);
                 }})
                 .customer(customer)
+                .address(address)
                 .orderStatus(OrderStatus.IN_DELIVERY)
                 .build();
 
@@ -146,6 +160,7 @@ public class DbInitializer {
                     put(pizza3, 3);
                 }})
                 .customer(customer)
+                .address(address)
                 .orderStatus(OrderStatus.DELIVERED)
                 .build();
 

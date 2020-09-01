@@ -53,6 +53,11 @@ public class Orderr {
     @JsonIgnore
     private Customer customer;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne
+    @JsonIgnore
+    private Address address;
 
     public OrderrDTO generateIncomingOrderDTO() {
         List<PizzaQuantityDTO> pizzaDTOs = new ArrayList<>();
@@ -68,6 +73,7 @@ public class Orderr {
                 .orderStatus(this.getOrderStatus())
                 .customer(this.getCustomer())
                 .incomingOrderedPizzas(pizzaDTOs)
+                .address(this.address)
                 .build();
         LOGGER.debug("incomingorderDTO: " + orderrDTO.toString());
         return orderrDTO;

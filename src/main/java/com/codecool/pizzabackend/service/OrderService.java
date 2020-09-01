@@ -3,6 +3,7 @@ package com.codecool.pizzabackend.service;
 import com.codecool.pizzabackend.controller.dto.OrderrDTO;
 import com.codecool.pizzabackend.controller.dto.PizzaQuantityDTO;
 import com.codecool.pizzabackend.entity.*;
+import com.codecool.pizzabackend.repository.AddressRepository;
 import com.codecool.pizzabackend.repository.OrderrRepository;
 import com.codecool.pizzabackend.repository.PizzaRepository;
 import com.codecool.pizzabackend.repository.UserRepository;
@@ -27,7 +28,8 @@ public class OrderService {
 
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private AddressRepository addressRepository;
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
 
     public void persistIncomingOrder(Long userId, OrderrDTO orderrDTO) {
@@ -37,10 +39,19 @@ public class OrderService {
             pizzas.put(pizzaRepository.getPizzaById(orderedPizzaQuantity.getId()), orderedPizzaQuantity.getQuantity());
         }
         User customer = userRepository.getUserById(userId);
+        Address address = Address.builder()
+                .city(orderrDTO.getAddress().getCity())
+                .postalCode(orderrDTO.getAddress().getPostalCode())
+                .street(orderrDTO.getAddress().getStreet())
+                .streetNumber(orderrDTO.getAddress().getStreetNumber())
+                .comment(orderrDTO.getAddress().getComment())
+                .build();
+        addressRepository.save(address);
         Orderr orderr = Orderr.builder()
                 .customer((Customer) customer)
                 .orderStatus(OrderStatus.ORDERED)
                 .orderedPizzas(pizzas)
+                .address(address)
                 .build();
 
         LOGGER.info("Incoming order created. incoming order: " + orderr.toString());
