@@ -39,13 +39,7 @@ public class OrderService {
             pizzas.put(pizzaRepository.getPizzaById(orderedPizzaQuantity.getId()), orderedPizzaQuantity.getQuantity());
         }
         User customer = userRepository.getUserById(userId);
-        Address address = Address.builder()
-                .city(orderrDTO.getAddress().getCity())
-                .postalCode(orderrDTO.getAddress().getPostalCode())
-                .street(orderrDTO.getAddress().getStreet())
-                .streetNumber(orderrDTO.getAddress().getStreetNumber())
-                .comment(orderrDTO.getAddress().getComment())
-                .build();
+        Address address = orderrDTO.getAddress();
         addressRepository.save(address);
         Orderr orderr = Orderr.builder()
                 .customer((Customer) customer)
