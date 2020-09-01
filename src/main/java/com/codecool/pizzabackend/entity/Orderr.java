@@ -63,6 +63,8 @@ public class Orderr {
 
         OrderrDTO orderrDTO = OrderrDTO.builder()
                 .id(this.getId())
+                .cook(this.cook)
+                .deliveryGuy(this.deliveryGuy)
                 .orderStatus(this.getOrderStatus())
                 .customer(this.getCustomer())
                 .incomingOrderedPizzas(pizzaDTOs)

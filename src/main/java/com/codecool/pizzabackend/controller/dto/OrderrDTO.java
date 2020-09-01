@@ -28,9 +28,11 @@ public class OrderrDTO {
         this.incomingOrderedPizzas = orderedPizzas;
     }
 
-    public OrderrDTO(Long id, OrderStatus orderStatus) {
+    public OrderrDTO(Long id, OrderStatus orderStatus, Cook cook, DeliveryGuy deliveryGuy) {
         this.id = id;
         this.orderStatus = orderStatus;
+        this.cook = cook;
+        this.deliveryGuy = deliveryGuy;
 
     }
 
