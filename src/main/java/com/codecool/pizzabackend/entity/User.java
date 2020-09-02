@@ -23,6 +23,8 @@ public abstract class User {
     private String username;
     private String password;
     private String name;
+    private String phoneNumber;
+    private String email;
     @ElementCollection
     @Singular
     private Set<String> roles;

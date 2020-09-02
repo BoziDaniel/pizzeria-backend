@@ -80,6 +80,8 @@ public class DbInitializer {
                 .username("customer")
                 .password(passwordEncoder.encode("pass"))
                 .role("ROLE_CUSTOMER")
+                .email("customer1@gmail.com")
+                .phoneNumber("0036709443402")
                 .build();
         userRepository.save(customer);
 
@@ -87,6 +89,8 @@ public class DbInitializer {
                 .username("customer1")
                 .password(passwordEncoder.encode("pass"))
                 .role("ROLE_CUSTOMER")
+                .phoneNumber("0036709443402")
+                .email("customer2@gmail.com")
                 .build();
         userRepository.save(customer1);
         Address address = Address.builder()
@@ -190,6 +194,8 @@ public class DbInitializer {
                 .assignedOrder(readyOrder)
                 .assignedOrder(indeliveryOrder)
                 .assignedOrder(deliveredOrder)
+                .phoneNumber("0036709443402")
+                .email("cook1@gmail.com")
                 .build();
         userRepository.save(cook);
 
@@ -197,6 +203,8 @@ public class DbInitializer {
                 .username("cook2")
                 .password(passwordEncoder.encode("pass"))
                 .role("ROLE_COOK")
+                .phoneNumber("0036709443401")
+                .email("cook2@gmail.com")
                 .build();
         userRepository.save(cook2);
 
@@ -204,12 +212,16 @@ public class DbInitializer {
                 .username("manager")
                 .role("ROLE_MANAGER")
                 .password(passwordEncoder.encode("pass"))
+                .phoneNumber("0036709443401")
+                .email("manager.LIKEABOSS@gmail.com")
                 .build();
         userRepository.save(manager);
         DeliveryGuy deliveryGuy = DeliveryGuy.builder()
                 .username("deliveryGuy")
                 .password(passwordEncoder.encode("pass"))
                 .role("ROLE_DELIVERYGUY")
+                .phoneNumber("0036709443401")
+                .email("deliveryGuy@gmail.com")
                 .assignedOrder(indeliveryOrder)
                 .assignedOrder(deliveredOrder)
                 .build();
