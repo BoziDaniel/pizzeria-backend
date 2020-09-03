@@ -78,6 +78,7 @@ public class DbInitializer {
 
         Customer customer = Customer.builder()
                 .username("customer")
+                .name("Anna")
                 .password(passwordEncoder.encode("pass"))
                 .role("ROLE_CUSTOMER")
                 .email("customer1@gmail.com")
@@ -87,6 +88,7 @@ public class DbInitializer {
 
         Customer customer1 = Customer.builder()
                 .username("customer1")
+                .name("Péter")
                 .password(passwordEncoder.encode("pass"))
                 .role("ROLE_CUSTOMER")
                 .phoneNumber("0036709443402")
@@ -188,6 +190,7 @@ public class DbInitializer {
 
         Cook cook = Cook.builder()
                 .username("cook")
+                .name("Józsi")
                 .password(passwordEncoder.encode("pass"))
                 .role("ROLE_COOK")
                 .assignedOrder(inprogressOrder)
@@ -201,6 +204,7 @@ public class DbInitializer {
 
         Cook cook2 = Cook.builder()
                 .username("cook2")
+                .name("Laci")
                 .password(passwordEncoder.encode("pass"))
                 .role("ROLE_COOK")
                 .phoneNumber("0036709443401")
@@ -210,6 +214,7 @@ public class DbInitializer {
 
         Manager manager = Manager.builder()
                 .username("manager")
+                .name("Béla")
                 .role("ROLE_MANAGER")
                 .password(passwordEncoder.encode("pass"))
                 .phoneNumber("0036709443401")
@@ -218,6 +223,7 @@ public class DbInitializer {
         userRepository.save(manager);
         DeliveryGuy deliveryGuy = DeliveryGuy.builder()
                 .username("deliveryGuy")
+                .name("Pista")
                 .password(passwordEncoder.encode("pass"))
                 .role("ROLE_DELIVERYGUY")
                 .phoneNumber("0036709443401")
