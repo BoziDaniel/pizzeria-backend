@@ -7,14 +7,12 @@ import com.codecool.pizzabackend.repository.AddressRepository;
 import com.codecool.pizzabackend.repository.OrderrRepository;
 import com.codecool.pizzabackend.repository.PizzaRepository;
 import com.codecool.pizzabackend.repository.UserRepository;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -110,7 +108,7 @@ public class OrderService {
         LOGGER.info(String.format("Finished to check if order with id: %s is owned by delivery guy with id: %s result is: %s", orderId,deliveryGuyId,result));
         return result;
     }
-
+    //Todo: Ask mentors to is it a good idea to validate current order status to not to allow logged in cook and deliveryGuy to change status of any order with custom made request
     public void setOrderStatusToReady(Long orderId, Long cookId) throws OrederrNotFoundException {
         LOGGER.info(String.format("Started the process of updating order status to READY order id: %s is  cook id: %s", orderId,cookId));
         if(isCookOwnsOrder(orderId, cookId)){

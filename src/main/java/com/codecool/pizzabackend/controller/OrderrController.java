@@ -25,7 +25,6 @@ public class OrderrController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderrController.class);
 
-    //refaktor it, put these into a service class
     @GetMapping("/active")
     public List<OrderrDTO> getActiveOrdersForUser(HttpServletRequest request) {
         LOGGER.info("GET request /orders/active/ arrived");
