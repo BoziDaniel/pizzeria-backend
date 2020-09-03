@@ -1,8 +1,11 @@
 package com.codecool.pizzabackend.security;
 
 
+import com.codecool.pizzabackend.entity.User;
+import com.codecool.pizzabackend.repository.UserRepository;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +19,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.hibernate.bytecode.BytecodeLogger.LOGGER;
+
 @Component
 @Slf4j
 public class JwtTokenServices {
@@ -26,6 +31,8 @@ public class JwtTokenServices {
     private long validityInMilliseconds = 36000000; // 10h
 
     private final String rolesFieldName = "roles";
+    @Autowired
+    private UserRepository userRepository;
 
     @PostConstruct
     protected void init() {
@@ -89,5 +96,14 @@ public class JwtTokenServices {
         Claims body = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
         String username = body.getSubject();
         return username;
+    }
+    public User getUserFromRequest(HttpServletRequest request) {
+        String token = getTokenFromRequest(request);
+        String username = getUsernameFromJwtToken(token);
+        LOGGER.info(String.format("username from token: %s", username));
+        User user = userRepository.getAppUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
+        return user;
+
     }
 }
