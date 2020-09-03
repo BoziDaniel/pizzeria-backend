@@ -12,24 +12,29 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class OrderService {
-    @Autowired
     private PizzaRepository pizzaRepository;
-
-    @Autowired
     private OrderrRepository orderrRepository;
+    private UserRepository userRepository;
+    private AddressRepository addressRepository;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private AddressRepository addressRepository;
-    private static final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
+    public OrderService(PizzaRepository pizzaRepository,
+                        OrderrRepository orderrRepository,
+                        UserRepository userRepository,
+                        AddressRepository addressRepository) {
+        this.pizzaRepository = pizzaRepository;
+        this.orderrRepository = orderrRepository;
+        this.userRepository = userRepository;
+        this.addressRepository = addressRepository;
+    }
 
     public void persistIncomingOrder(Long userId, OrderrDTO orderrDTO) {
         LOGGER.trace("Starting to create incoming order from userId: " + userId + "incomingOrderDTO: " + orderrDTO.toString());
@@ -64,6 +69,7 @@ public class OrderService {
         LOGGER.info("listActiveOrdersForUser started");
         //TODO: Maybe do the the whole thing in one sql.
         //TODO: error handling!
+        //TODO: if not change it to sql, improve logging by log what active orders are found
         User user = userRepository.getUserById(userId);
         String userRole = user.getRoles().stream().findFirst().get();
         LOGGER.info(" User role queired for userid: " + userId + " found role: " + userRole);
@@ -83,6 +89,7 @@ public class OrderService {
             case "ROLE_COOK": {
                 LOGGER.info("Starting to list orders for cook. user id: " + userId);
                 activeOrders = orderrRepository.getCookActiveAssignedOrders(userId);
+                LOGGER.info(String.format("Finished to list orders for cook. user id: %s , found active orders: %s",userId,activeOrders.toString()));
                 break;
             }
             case "ROLE_DELIVERYGUY": {
@@ -137,6 +144,7 @@ public class OrderService {
                 .orElseThrow(() -> new OrederrNotFoundException(String.format("Order with id: %s not found",orderId)));
         Cook cook = (Cook)userRepository.findById(cookId).orElseThrow(() -> new UsernameNotFoundException("User with id : " + cookId + " not found"));
         orderr.setCook(cook);
+        orderr.setOrderStatus(OrderStatus.IN_PROGRESS);
         orderrRepository.save(orderr);
         LOGGER.info(String.format("Finished the process of updating order with id %s with cook with id %s ", orderId, cookId));
     }
@@ -147,6 +155,7 @@ public class OrderService {
                 .orElseThrow(() -> new OrederrNotFoundException(String.format("Order with id: %s not found",orderId)));
         DeliveryGuy deliveryGuy = (DeliveryGuy) userRepository.findById(deliveryGuyId).orElseThrow(() -> new UsernameNotFoundException("User with id : " + deliveryGuyId + " not found"));
         orderr.setDeliveryGuy(deliveryGuy);
+        orderr.setOrderStatus(OrderStatus.IN_DELIVERY);
         orderrRepository.save(orderr);
         LOGGER.info(String.format("Finished the process of updating order with id %s with delivery guy with id %s ", orderId, deliveryGuyId));
     }
