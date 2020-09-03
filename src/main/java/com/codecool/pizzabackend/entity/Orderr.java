@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,12 +59,7 @@ public class Orderr {
     private Address address;
 
     public OrderrDTO generateIncomingOrderDTO() {
-        List<PizzaQuantityDTO> pizzaDTOs = new ArrayList<>();
-        for (Pizza pizza : orderedPizzas.keySet()) {
-            PizzaQuantityDTO pizzaDTO = generateDTOfromPizza(pizza);
-            pizzaDTOs.add(pizzaDTO);
-        }
-
+        List<PizzaQuantityDTO> pizzaDTOs = generatePizzaQuantityDTOs();
         OrderrDTO orderrDTO = OrderrDTO.builder()
                 .id(this.getId())
                 .cook(this.cook)
@@ -79,6 +73,15 @@ public class Orderr {
         return orderrDTO;
     }
 
+    private List<PizzaQuantityDTO> generatePizzaQuantityDTOs(){
+        List<PizzaQuantityDTO> pizzaDTOs = new ArrayList<>();
+        for (Pizza pizza : orderedPizzas.keySet()) {
+            PizzaQuantityDTO pizzaDTO = generateDTOfromPizza(pizza);
+            pizzaDTOs.add(pizzaDTO);
+        }
+        return pizzaDTOs;
+    }
+
     private PizzaQuantityDTO generateDTOfromPizza(Pizza pizza) {
         PizzaQuantityDTO pizzaDTO = PizzaQuantityDTO.builder()
                 .id(pizza.getId())
@@ -86,8 +89,6 @@ public class Orderr {
                 .description(pizza.getDescription())
                 .quantity(orderedPizzas.get(pizza))
                 .build();
-
-
         return pizzaDTO;
     }
 }

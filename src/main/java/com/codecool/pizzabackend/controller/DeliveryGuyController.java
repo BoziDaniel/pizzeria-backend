@@ -13,9 +13,14 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/deliveryGuy")
 public class DeliveryGuyController {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderrController.class);
-    @Autowired
     private DeliveryGuyService deliveryGuyService;
+
+    @Autowired
+    public DeliveryGuyController(DeliveryGuyService deliveryGuyService) {
+        this.deliveryGuyService = deliveryGuyService;
+    }
 
     @GetMapping("/all")
     public List<UserDTO> getAllDeliveryGuys() {

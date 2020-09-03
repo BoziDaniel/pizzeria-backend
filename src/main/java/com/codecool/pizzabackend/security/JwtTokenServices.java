@@ -1,6 +1,5 @@
 package com.codecool.pizzabackend.security;
 
-
 import com.codecool.pizzabackend.entity.User;
 import com.codecool.pizzabackend.repository.UserRepository;
 import io.jsonwebtoken.*;
@@ -18,7 +17,6 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-
 import static org.hibernate.bytecode.BytecodeLogger.LOGGER;
 
 @Component
@@ -29,10 +27,13 @@ public class JwtTokenServices {
 
     @Value("${security.jwt.token.expire-length:3600000}")
     private long validityInMilliseconds = 36000000; // 10h
-
     private final String rolesFieldName = "roles";
-    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    public JwtTokenServices(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @PostConstruct
     protected void init() {

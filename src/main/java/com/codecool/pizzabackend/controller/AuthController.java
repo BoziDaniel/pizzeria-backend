@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    @Autowired
     private AuthService authService;
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
+    @Autowired
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody UserCredentials data) {

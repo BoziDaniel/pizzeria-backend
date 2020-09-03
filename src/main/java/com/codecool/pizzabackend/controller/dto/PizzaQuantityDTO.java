@@ -10,10 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class PizzaQuantityDTO {
+
     private Long id;
     private String name;
     private String description;
     private int quantity;
-
-
 }

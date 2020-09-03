@@ -13,10 +13,13 @@ import java.util.List;
 @RequestMapping("/pizzas")
 public class PizzaController {
 
-    @Autowired
     private PizzaRepository pizzaRepository;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(PizzaController.class);
+
+    @Autowired
+    public PizzaController(PizzaRepository pizzaRepository) {
+        this.pizzaRepository = pizzaRepository;
+    }
 
     @GetMapping("/numberOfPizzas")
     public Integer getNumberOfPizzas(){

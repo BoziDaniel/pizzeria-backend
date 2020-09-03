@@ -13,7 +13,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,13 +20,14 @@ import java.util.stream.Collectors;
 public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenServices jwtTokenServices;
-    @Autowired
     private UserRepository userRepository;
     private final PasswordEncoder passwordEncoder= PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
-    public AuthService(AuthenticationManager authenticationManager, JwtTokenServices jwtTokenServices) {
+    @Autowired
+    public AuthService(AuthenticationManager authenticationManager, JwtTokenServices jwtTokenServices, UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenServices = jwtTokenServices;
+        this.userRepository = userRepository;
     }
 
     private Map<Object, Object> createModel(String username, List<String> roles, String token) {

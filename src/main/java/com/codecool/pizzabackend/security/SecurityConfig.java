@@ -1,6 +1,5 @@
 package com.codecool.pizzabackend.security;
 
-import com.codecool.pizzabackend.entity.Cook;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,14 +11,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import java.util.Arrays;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenServices jwtTokenServices;
 
-    //    @PreAuthorize() megnéz
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -30,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public SecurityConfig(JwtTokenServices jwtTokenServices) {
         this.jwtTokenServices = jwtTokenServices;
     }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();

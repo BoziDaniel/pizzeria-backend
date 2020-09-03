@@ -1,7 +1,6 @@
 package com.codecool.pizzabackend.entity;
 
 import lombok.*;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +12,7 @@ import javax.persistence.Id;
 @Builder
 @Entity
 public class Pizza {
+
     @GeneratedValue
     @Id
     private Long id;
@@ -21,12 +21,9 @@ public class Pizza {
     private String name;
 
     private String description;
-
-
     private int price;
+
     public Pizza(Long id) {
         this.id = id;
     }
-
-
 }

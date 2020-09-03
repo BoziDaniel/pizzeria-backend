@@ -9,21 +9,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
 import java.util.HashMap;
 import java.util.HashSet;
 
 @Component
 public class DbInitializer {
-    @Autowired
+
     private PizzaRepository pizzaRepository;
-    @Autowired
     private OrderrRepository orderrRepository;
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private AddressRepository addressRepository;
     private final PasswordEncoder passwordEncoder= PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
+    @Autowired
+    public DbInitializer(PizzaRepository pizzaRepository,
+                         OrderrRepository orderrRepository,
+                         UserRepository userRepository,
+                         AddressRepository addressRepository) {
+        this.pizzaRepository = pizzaRepository;
+        this.orderrRepository = orderrRepository;
+        this.userRepository = userRepository;
+        this.addressRepository = addressRepository;
+    }
+
     public void intializeDatabase() {
         //PizzaCretion
         for (int i = 1; i < 21; i++) {

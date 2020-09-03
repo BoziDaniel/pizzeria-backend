@@ -13,10 +13,14 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/cook")
 public class CookController {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderrController.class);
+    private CookService cookService;
 
     @Autowired
-    private CookService cookService;
+    public CookController(CookService cookService) {
+        this.cookService = cookService;
+    }
 
     @GetMapping("/all")
     public List<UserDTO> getAllCooks() {

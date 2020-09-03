@@ -3,7 +3,6 @@ package com.codecool.pizzabackend.entity;
 import com.codecool.pizzabackend.controller.dto.UserDTO;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -15,16 +14,18 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class User {
+
     @GeneratedValue
     @Id
     private Long id;
 
-    //@Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
     private String password;
     private String name;
     private String phoneNumber;
     private String email;
+
     @ElementCollection
     @Singular
     private Set<String> roles;

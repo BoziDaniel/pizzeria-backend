@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -17,13 +16,15 @@ import java.util.List;
 @RequestMapping(value = "/orders")
 public class OrderrController {
 
-    @Autowired
     private OrderService orderService;
+    private JwtTokenServices jwtTokenServices;
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderrController.class);
 
     @Autowired
-    private JwtTokenServices jwtTokenServices;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(OrderrController.class);
+    public OrderrController(OrderService orderService, JwtTokenServices jwtTokenServices) {
+        this.orderService = orderService;
+        this.jwtTokenServices = jwtTokenServices;
+    }
 
     @GetMapping("/active")
     public List<OrderrDTO> getActiveOrdersForUser(HttpServletRequest request) {

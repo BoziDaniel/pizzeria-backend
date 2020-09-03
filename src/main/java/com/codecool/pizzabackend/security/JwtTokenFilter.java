@@ -1,10 +1,8 @@
 package com.codecool.pizzabackend.security;
 
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -28,7 +26,6 @@ public class JwtTokenFilter extends GenericFilterBean {
             Authentication auth = jwtTokenServices.parseUserFromTokenInfo(token);
             // Marks the user as authenticated.
             // If this code does not run, the request will fail for routes that are configured to need authentication
-
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
         // process the next filter.

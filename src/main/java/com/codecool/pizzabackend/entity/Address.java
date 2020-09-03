@@ -2,7 +2,6 @@ package com.codecool.pizzabackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -22,6 +21,7 @@ public class Address {
     private String street;
     private String streetNumber;
     private String comment;
+
     @OneToMany(mappedBy = "address")
     @JsonIgnore
     private Set<Orderr> ordersToAddress;
