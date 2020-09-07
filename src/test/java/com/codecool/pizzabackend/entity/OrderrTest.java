@@ -11,23 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderrTest {
-
-    @Test
-    void testGenerateIncomingOrderDTO() {
-        Pizza pizza = Pizza.builder()
-                .id(1l)
-                .name("Salami pizza")
-                .description("tastes reeel goooood")
-                .price(6000)
-                .build();
-
-        Pizza pizza2 = Pizza.builder()
-                .id(2l)
-                .name("Meatlover pizza")
-                .description("tastes good ")
-                .price(6000)
-                .build();
-
+    private List<PizzaQuantityDTO> generatePizzaQuantityDtoList(){
         PizzaQuantityDTO pizzaDTO = PizzaQuantityDTO.builder()
                 .id(1l)
                 .name("Salami pizza")
@@ -45,6 +29,26 @@ class OrderrTest {
         List<PizzaQuantityDTO> expectedPizzas = new ArrayList<>();
         expectedPizzas.add(pizzaDTO);
         expectedPizzas.add(pizza2DTO);
+        return expectedPizzas;
+    }
+
+    @Test
+    void testGenerateIncomingOrderDTO() {
+        Pizza pizza = Pizza.builder()
+                .id(1l)
+                .name("Salami pizza")
+                .description("tastes reeel goooood")
+                .price(6000)
+                .build();
+
+        Pizza pizza2 = Pizza.builder()
+                .id(2l)
+                .name("Meatlover pizza")
+                .description("tastes good ")
+                .price(6000)
+                .build();
+
+        List<PizzaQuantityDTO> expectedPizzas = generatePizzaQuantityDtoList();
 
         Customer customer = Customer.builder()
                 .username("customer")
