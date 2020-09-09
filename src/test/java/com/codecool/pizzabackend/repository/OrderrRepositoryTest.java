@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -215,5 +215,70 @@ class OrderrRepositoryTest {
         List<Orderr> orderrs = orderrRepository.getDeliveryGuyActiveAssignedOrders(deliveryGuy1.getId());
         assertThat(orderrs).hasSize(1);
         assertEquals(orderr1, orderrs.get(0));
+    }
+
+    @Test
+    void testIsOrderOwnedByCook() {
+        Pizza pizza = Pizza.builder()
+                .name("Songoku")
+                .description("Tasty")
+                .price(47000)
+                .build();
+        pizzaRepository.save(pizza);
+        Orderr orderr1 = Orderr.builder()
+                .orderStatus(OrderStatus.IN_DELIVERY)
+                .orderedPizzas(new HashMap<Pizza, Integer>() {{
+                    put(pizza, 12);
+                }})
+                .build();
+        orderrRepository.save(orderr1);
+        Orderr orderr2 = Orderr.builder()
+                .orderStatus(OrderStatus.IN_DELIVERY)
+                .orderedPizzas(new HashMap<Pizza, Integer>() {{
+                    put(pizza, 2);
+                }})
+                .build();
+        orderrRepository.save(orderr2);
+
+        Orderr orderr3 = Orderr.builder()
+                .orderStatus(OrderStatus.DELIVERED)
+                .orderedPizzas(new HashMap<Pizza, Integer>() {{
+                    put(pizza, 2);
+                }})
+                .build();
+        orderrRepository.save(orderr3);
+
+        Cook cook1 = Cook.builder()
+                .username("cook")
+                .name("Józsi")
+                .password("pass")
+                .role("ROLE_COOK")
+                .assignedOrder(orderr1)
+                .assignedOrder(orderr3)
+                .phoneNumber("0036709443402")
+                .email("cook1@gmail.com")
+                .build();
+        userRepository.save(cook1);
+
+
+        Cook cook2 = Cook.builder()
+                .username("cook2")
+                .name("Laci")
+                .password("pass")
+                .role("ROLE_COOK")
+                .assignedOrder(orderr2)
+                .phoneNumber("0036709443401")
+                .email("cook2@gmail.com")
+                .build();
+        userRepository.save(cook2);
+        orderr2.setCook(cook2);
+        orderr1.setCook(cook1);
+        orderr3.setCook(cook1);
+        orderrRepository.save(orderr1);
+        orderrRepository.save(orderr2);
+        orderrRepository.save(orderr3);
+        assertTrue(orderrRepository.isOrderOwnedByCook(orderr1.getId(), cook1.getId()));
+        assertFalse(orderrRepository.isOrderOwnedByCook(orderr1.getId(), cook2.getId()));
+        assertFalse(orderrRepository.isOrderOwnedByCook(orderr2.getId(), cook1.getId()));
     }
 }
