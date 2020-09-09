@@ -12,7 +12,6 @@ public interface OrderrRepository extends JpaRepository<Orderr, Long> {
 
     List<Orderr> getOrderrsByOrderStatusNotLike(OrderStatus orderStatus);
 
-    //TODO: ASK mentors how this black magic works
     @Query(value = "SELECT * FROM ORDERR\n" +
             "WHERE COOK_ID  = ?1 AND ORDER_STATUS = 'IN_PROGRESS'", nativeQuery = true)
     List<Orderr> getCookActiveAssignedOrders(Long id);
