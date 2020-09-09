@@ -281,4 +281,67 @@ class OrderrRepositoryTest {
         assertFalse(orderrRepository.isOrderOwnedByCook(orderr1.getId(), cook2.getId()));
         assertFalse(orderrRepository.isOrderOwnedByCook(orderr2.getId(), cook1.getId()));
     }
+
+    @Test
+    void testIsOrderOwnedByDeliveryGuy() {
+        Pizza pizza = Pizza.builder()
+                .name("Songoku")
+                .description("Tasty")
+                .price(47000)
+                .build();
+        pizzaRepository.save(pizza);
+        Orderr orderr1 = Orderr.builder()
+                .orderStatus(OrderStatus.IN_DELIVERY)
+                .orderedPizzas(new HashMap<Pizza, Integer>() {{
+                    put(pizza, 12);
+                }})
+                .build();
+        orderrRepository.save(orderr1);
+        Orderr orderr2 = Orderr.builder()
+                .orderStatus(OrderStatus.IN_DELIVERY)
+                .orderedPizzas(new HashMap<Pizza, Integer>() {{
+                    put(pizza, 2);
+                }})
+                .build();
+        orderrRepository.save(orderr2);
+
+        Orderr orderr3 = Orderr.builder()
+                .orderStatus(OrderStatus.DELIVERED)
+                .orderedPizzas(new HashMap<Pizza, Integer>() {{
+                    put(pizza, 2);
+                }})
+                .build();
+        orderrRepository.save(orderr3);
+        DeliveryGuy deliveryGuy1 = DeliveryGuy.builder()
+                .username("deliveryGuy1")
+                .name("Pista")
+                .password("pass")
+                .role("ROLE_DELIVERYGUY")
+                .phoneNumber("0036709443401")
+                .email("deliveryGuy1@gmail.com")
+                .assignedOrder(orderr1)
+                .assignedOrder(orderr3)
+                .build();
+        userRepository.save(deliveryGuy1);
+        DeliveryGuy deliveryGuy2 = DeliveryGuy.builder()
+                .username("deliveryGuy2")
+                .name("Pistaa")
+                .password("pass")
+                .role("ROLE_DELIVERYGUY")
+                .phoneNumber("00367094434011")
+                .email("deliveryGuy2@gmail.com")
+                .assignedOrder(orderr2)
+                .build();
+        userRepository.save(deliveryGuy2);
+        orderr1.setDeliveryGuy(deliveryGuy1);
+        orderr3.setDeliveryGuy(deliveryGuy1);
+        orderr2.setDeliveryGuy(deliveryGuy2);
+        orderrRepository.save(orderr1);
+        orderrRepository.save(orderr2);
+        orderrRepository.save(orderr3);
+
+        assertTrue(orderrRepository.isOrderOwnedByDeliveryGuy(orderr1.getId(), deliveryGuy1.getId()));
+        assertFalse(orderrRepository.isOrderOwnedByDeliveryGuy(orderr1.getId(), deliveryGuy2.getId()));
+        assertFalse(orderrRepository.isOrderOwnedByDeliveryGuy(orderr2.getId(), deliveryGuy1.getId()));
+    }
 }
