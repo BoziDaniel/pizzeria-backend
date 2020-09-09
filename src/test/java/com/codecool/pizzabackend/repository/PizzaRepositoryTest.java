@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,5 +38,10 @@ class PizzaRepositoryTest {
 
     @Test
     void testGetPaginatedPizzas() {
+        createPizzas(31);
+        assertEquals(10, pizzaRepository.getPaginatedPizzas(1).size());
+        assertEquals(1, pizzaRepository.getPaginatedPizzas(4).size());
+        assertEquals( "pizza_30" ,pizzaRepository.getPaginatedPizzas(4).get(0).getName());
+
     }
 }
