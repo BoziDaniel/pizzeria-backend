@@ -26,7 +26,7 @@ public class Orderr {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "incomingOrder_pizza_mapping",
             joinColumns = {@JoinColumn(name = "incomingOrder_id", referencedColumnName = "id")})
     @MapKeyColumn(name = "pizza_name")
