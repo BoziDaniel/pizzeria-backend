@@ -1,0 +1,30 @@
+package com.codecool.pizzabackend.controller;
+
+import com.codecool.pizzabackend.entity.User;
+import com.codecool.pizzabackend.repository.UserRepository;
+import com.codecool.pizzabackend.service.OrederrNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+
+    private UserRepository userRepository;
+
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @GetMapping("/exists/{username}")
+    public boolean isUserExistByName(@PathVariable("username") String username){
+        LOGGER.info(String.format("Get request arrived to path: /users/exists/%s",username));
+        boolean isUserWithNameExist = userRepository.existsByUsername(username);
+        LOGGER.info(String.format("Get request /users/exists/%s processed. result: %s",username, isUserWithNameExist));
+        return isUserWithNameExist;
+    }
+}
