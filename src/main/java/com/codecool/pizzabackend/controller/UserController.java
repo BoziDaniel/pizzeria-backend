@@ -1,13 +1,12 @@
 package com.codecool.pizzabackend.controller;
 
-import com.codecool.pizzabackend.entity.User;
 import com.codecool.pizzabackend.repository.UserRepository;
-import com.codecool.pizzabackend.service.OrederrNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/users")
@@ -20,14 +19,14 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/exists/{username}")
-    public boolean isUserExistByName(@PathVariable("username") String username){
-        LOGGER.info(String.format("Get request arrived to path: /users/exists/%s",username));
+    @GetMapping("/username/exists")
+    public boolean isUserExistByName(@RequestParam("username") String username){
+        LOGGER.info(String.format("Get request arrived to path: users/username/exists?username=%s",username));
         boolean isUserWithNameExist = userRepository.existsByUsername(username);
-        LOGGER.info(String.format("Get request /users/exists/%s processed. result: %s",username, isUserWithNameExist));
+        LOGGER.info(String.format("Get request users/username/exists?username=%s processed. result: %s",username, isUserWithNameExist));
         return isUserWithNameExist;
     }
-    @GetMapping("/exists")
+    @GetMapping("/phoneNumber/exists")
     public boolean isPhoneNumberOccupied(@RequestParam("phoneNumber") String phoneNumber){
         LOGGER.info(String.format("Get request arrived to path: /users/exists?phoneNumber=%s", phoneNumber));
         boolean isPhoneNumberAlreadyInUse = userRepository.existsByPhoneNumber(phoneNumber);
