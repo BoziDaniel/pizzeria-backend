@@ -59,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/pizzas/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/registration").anonymous()
                 .antMatchers(HttpMethod.GET,"/users/exists/**").anonymous()
+                .antMatchers(HttpMethod.GET,"/users/email/exists/**").anonymous()
                 .antMatchers(HttpMethod.GET, "/orders/active/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/cook/all").hasRole("MANAGER")
                 .antMatchers(HttpMethod.GET, "/deliveryGuy/all").hasRole("MANAGER")
