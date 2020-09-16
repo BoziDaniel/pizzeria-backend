@@ -27,4 +27,11 @@ public class UserController {
         LOGGER.info(String.format("Get request /users/exists/%s processed. result: %s",username, isUserWithNameExist));
         return isUserWithNameExist;
     }
+    @GetMapping("/exists")
+    public boolean isPhoneNumberOccupied(@RequestParam("phoneNumber") String phoneNumber){
+        LOGGER.info(String.format("Get request arrived to path: /users/exists?phoneNumber=%s", phoneNumber));
+        boolean isPhoneNumberAlreadyInUse = userRepository.existsByPhoneNumber(phoneNumber);
+        LOGGER.info(String.format("Get request /users/exists/%s processed. result: %s",phoneNumber, isPhoneNumberAlreadyInUse));
+        return isPhoneNumberAlreadyInUse;
+    }
 }

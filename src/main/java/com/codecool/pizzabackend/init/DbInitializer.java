@@ -90,7 +90,7 @@ public class DbInitializer {
                 .password(passwordEncoder.encode("pass"))
                 .role("ROLE_CUSTOMER")
                 .email("customer1@gmail.com")
-                .phoneNumber("0036709443402")
+                .phoneNumber("06-30-111-1111")
                 .build();
         userRepository.save(customer);
 
@@ -99,7 +99,7 @@ public class DbInitializer {
                 .name("Péter")
                 .password(passwordEncoder.encode("pass"))
                 .role("ROLE_CUSTOMER")
-                .phoneNumber("0036709443402")
+                .phoneNumber("06-30-222-2222")
                 .email("customer2@gmail.com")
                 .build();
         userRepository.save(customer1);
@@ -205,7 +205,7 @@ public class DbInitializer {
                 .assignedOrder(readyOrder)
                 .assignedOrder(indeliveryOrder)
                 .assignedOrder(deliveredOrder)
-                .phoneNumber("0036709443402")
+                .phoneNumber("06-30-333-3333")
                 .email("cook1@gmail.com")
                 .build();
         userRepository.save(cook);
@@ -215,7 +215,7 @@ public class DbInitializer {
                 .name("Laci")
                 .password(passwordEncoder.encode("pass"))
                 .role("ROLE_COOK")
-                .phoneNumber("0036709443401")
+                .phoneNumber("06-30-444-4444")
                 .email("cook2@gmail.com")
                 .build();
         userRepository.save(cook2);
@@ -225,7 +225,7 @@ public class DbInitializer {
                 .name("Béla")
                 .role("ROLE_MANAGER")
                 .password(passwordEncoder.encode("pass"))
-                .phoneNumber("0036709443401")
+                .phoneNumber("06-30-555-5555")
                 .email("manager.LIKEABOSS@gmail.com")
                 .build();
         userRepository.save(manager);
@@ -234,7 +234,7 @@ public class DbInitializer {
                 .name("Pista")
                 .password(passwordEncoder.encode("pass"))
                 .role("ROLE_DELIVERYGUY")
-                .phoneNumber("0036709443401")
+                .phoneNumber("06-30-666-6666")
                 .email("deliveryGuy@gmail.com")
                 .assignedOrder(indeliveryOrder)
                 .assignedOrder(deliveredOrder)
