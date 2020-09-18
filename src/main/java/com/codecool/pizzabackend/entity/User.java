@@ -23,7 +23,11 @@ public abstract class User {
     private String username;
     private String password;
     private String name;
+
+    @Column(nullable = false, unique = true)
     private String phoneNumber;
+
+    @Column(nullable = false, unique = true)
     private String email;
 
     @ElementCollection
